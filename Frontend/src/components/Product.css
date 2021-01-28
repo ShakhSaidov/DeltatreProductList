@@ -1,0 +1,27 @@
+.box{
+  width: 100%;
+  height: 75vh;
+  padding: 1% 2%;
+  background: #fff;
+  min-height: 100px;
+  max-height: 200px;
+  box-sizing: border-box;
+}
+
+.container{
+  min-width: 350px;
+  margin: 2% 2%;
+  display: inline-flex;
+  box-shadow: 0 2px 4px rgba(0,0,0, .2)
+}
+
+.container:hover{
+  box-shadow:0 5px 10px rgba(0,0,0,.15);
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+}
