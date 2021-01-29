@@ -15,9 +15,14 @@ const App = () => {
   }, [])
 
   const handleAdd = newProduct => {
-    serverRoutes
+    const newName = newProduct.name;
+    if(!products.find(product => product.name === newName)){
+      serverRoutes
       .add(newProduct)
       .then(returnedNewProduct => setProducts(products.concat(returnedNewProduct)))
+    } else {
+
+    }
   }
 
   const handleRemove = (event, id, number) => {

@@ -12,9 +12,6 @@ const Product = ({handleAdd}) => {
 
   const addProduct = event => {
     event.preventDefault()
-    console.log("Current Name: ", name);
-    console.log("Current Description: ", description);
-    console.log("Current Quantity: ", quantity);
 
     handleAdd({
       name: name,
