@@ -5,14 +5,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-let products = [
-  {
-    name: "Testing",
-    description: "Generic product name",
-    quantity: 10,
-    id: 1
-  }
-]
+let products = []
 
 //Function to generate new ID
 const getNewId = () => {
