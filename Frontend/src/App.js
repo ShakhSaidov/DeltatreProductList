@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import serverRoutes from './server/ProductsList'
 import Product from './components/Product'
 import NewProductForm from './components/NewProductForm'
 import Message from './components/Message'
+import Switch from './components/Switch'
 import './App.css'
 
 const App = () => {
   const [products, setProducts] = useState([])
   const [message, setMessage] = useState(null)
-  const [pressedAdd, setPressedAdd] = useState(false)
+  const productFormRef = useRef()
 
   useEffect(() => {
     serverRoutes
@@ -34,6 +35,7 @@ const App = () => {
         setMessage(null)
       }, 5000)
     }
+    productFormRef.current.switchButton()
   }
 
   const handleRemove = (event, id, number) => {
@@ -46,16 +48,13 @@ const App = () => {
     }
   }
 
-  const handleAddForm = () => setPressedAdd(true)
-
   return (
     <div>
       <Message message={message} />
       {products.length !== 0 && <h1 className="center">Products List</h1> }
-      {pressedAdd
-        ? <NewProductForm handleAdd={handleAdd} />
-        : <button onClick={handleAddForm}>Add new product</button>
-      }
+      <Switch buttonLabel="Add new product" ref={productFormRef}>
+        <NewProductForm handleAdd={handleAdd}/>
+      </Switch>
       <div>
         {products.map((product, index) =>
           <Product

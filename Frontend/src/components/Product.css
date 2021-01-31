@@ -30,20 +30,21 @@
   padding: 1% 2%;
   max-height: 50px;
   vertical-align: middle;
-  left: -20px;
+  left: -2%;
 }
 
 textarea {
   display: inline-block;
-  margin-top: 5px;
   margin-left: 3px;
-  width: 20vw
+  width: 20vw;
+  resize: none;
 }
 
 label{
   display: inline-block;
   text-align: right;
   width: 10vw;
+  margin-right: 1vw;
 }
 
 input {
