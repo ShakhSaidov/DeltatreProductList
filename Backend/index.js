@@ -5,7 +5,26 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-let products = []
+let products = [
+  {
+    name: "DIVA",
+    description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
+    quantity: 15,
+    id: 1
+  },
+  {
+    name: "AXIS",
+    description: "A targeted UX management console and suite of multi-platform reference apps.",
+    quantity: 100,
+    id: 2
+  },
+  {
+    name: "FORGE",
+    description: "The world's first sport-focused publishing platform.",
+    quantity: 1,
+    id: 3
+  }
+]
 
 //Function to generate new ID
 const getNewId = () => {
