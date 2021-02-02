@@ -1,8 +1,6 @@
-import React, {useState} from 'react'
-import '../App.css'
-import './Product.css'
+import React, { useState } from 'react'
 
-const Product = ({handleAdd}) => {
+const Product = ({ handleAdd }) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [quantity, setQuantity] = useState('')
@@ -27,27 +25,29 @@ const Product = ({handleAdd}) => {
 
 
   return (
-    <div className="center">
-      <h2>New Product Form</h2>
-      <form onSubmit={addProduct} className="newForm">
-        <div>
-          <label>Name: </label>
-          <input type="text" name="name" value={name} onChange={handleNameChange} />
+    <div className="container h-100">
+      <div className="row h-100 justify-content-center align-items-center">
+        <div className="col-10 col-md-8 col-lg-6">
+          <form className="form-example" onSubmit={addProduct}>
+            <div className="form-group">
+              <label>Name: </label>
+              <input className="form-control" type="text" name="name" value={name} onChange={handleNameChange} />
+            </div>
+            <div className="form-group">
+              <label>Description: </label>
+              <textarea className="form-control" rows="3" name="description" value={description} onChange={handleDescriptionChange} />
+            </div>
+            <div className="form-group">
+              <label>Qty. Available: </label>
+              <input className="form-control" type="text" name="quantity" value={quantity} onChange={handleQuantityChange} />
+            </div>
+            <div className="form-group center">
+              <input className="btn btn-primary" type="submit" />
+            </div>
+          </form>
         </div>
-        <div>
-          <label>Description: </label>
-          <textarea name="description" value={description} onChange={handleDescriptionChange} />
-        </div>
-        <div>
-          <label>Qty. Available: </label>
-          <input type="text" name="quantity" value={quantity} onChange={handleQuantityChange} />
-        </div>
-        <div>
-          <label></label>
-          <input type="submit"/>
-        </div>
-      </form>
-    </div >
+      </div>
+    </div>
   )
 }
 

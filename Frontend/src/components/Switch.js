@@ -17,13 +17,13 @@ const Switch = React.forwardRef((props, ref) => {
   })
 
   return (
-    <div>
-      <div style={hideWhenShown}>
-        <button onClick={switchButton}>{props.buttonLabel}</button>
+    <div className="container">
+      <div className="text-right" style={hideWhenShown}>
+        <button className="btn btn-primary" onClick={switchButton}>{props.buttonLabel}</button>
       </div>
-      <div style={showWhenShown}>
+      <div className="text-right" style={showWhenShown}>
         {props.children}
-        <button onClick={switchButton}>cancel</button>
+        <button className="btn btn-primary" onClick={switchButton}>cancel</button>
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ const Message = ({message}) => {
 
   else {
     return (
-      <h2 className="center">{message}</h2>
+      <h2 class="alert alert-warning" role="alert">{message}</h2>
     )
   }
 }

@@ -50,7 +50,7 @@ const App = () => {
 
   return (
     <div>
-      <Message message={message} />
+      <div className="center"><Message message={message} /></div>
       {products.length !== 0 && <h1 className="center">Products List</h1> }
       <Switch buttonLabel="Add new product" ref={productFormRef}>
         <NewProductForm handleAdd={handleAdd}/>
