@@ -3,10 +3,10 @@ import React from 'react'
 const Product = ({ product, number, handleRemove }) => {
   return (
     <div>
-      <li className="card text-center w-50 p-2 m-2">
+      <li className="card text-center w-50 p-1 m-5">
         <div className="card-body">
           <h2 className="card-title">Product {number}</h2>
-          <ul className="list-group">
+          <ul className="center list-group-flush align-items-stretch">
             <li className="list-group-item">
               <b>Name:</b> {product.name}
             </li>
