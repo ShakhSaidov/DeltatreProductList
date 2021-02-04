@@ -1,3 +1,6 @@
+GET http://localhost:3001
+
+###
 GET http://localhost:3001/products
 
 ###
@@ -5,10 +8,10 @@ POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-  "name": "Another Test",
-  "description": "Second generic product name",
-  "quantity": 5
+  "name": "",
+  "description": "",
+  "quantity": "rtert"
 }
 
 ###
-DELETE http://localhost:3001/products/1
+DELETE http://localhost:3001/products/4
