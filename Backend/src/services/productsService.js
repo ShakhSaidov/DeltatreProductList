@@ -4,6 +4,7 @@ import data from '../../data/products.js'
 
 //Function to validate product content
 const validateProduct = product => {
+  //move outside function
   const schema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -12,6 +13,11 @@ const validateProduct = product => {
   .options({abortEarly: false})
 
   return schema.validate(product)
+}
+
+//Function to receive the products data
+const getAllProducts = () => {
+  return data.getProducts()
 }
 
 //Function to find a product that has the given ID
@@ -40,6 +46,7 @@ const deleteProduct = id => {
 
 export default {
   validateProduct,
+  getAllProducts,
   findProductByID,
   addProduct,
   deleteProduct

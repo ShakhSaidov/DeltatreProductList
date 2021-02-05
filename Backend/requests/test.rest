@@ -10,8 +10,8 @@ Content-Type: application/json
 {
   "name": "Testing Product",
   "description": "Generic description",
-  "quantity": -8
+  "quantity": 99
 }
 
 ###
-DELETE http://localhost:3001/products/CEgMh3i2mC_dUy8QZA5Uh
+DELETE http://localhost:3001/products/8zIz7WPP5ICSQwGm4OVu_

@@ -1,4 +1,4 @@
-export let products = [
+let products = [
   {
     name: "DIVA",
     description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
@@ -19,6 +19,8 @@ export let products = [
   }
 ]
 
+const getProducts = () => products
+
 const find = id => {
   return products.find(product => product.id === id)
 }
@@ -32,6 +34,7 @@ const remove = id => {
 }
 
 const data = {
+  getProducts,
   find,
   add,
   remove

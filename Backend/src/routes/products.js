@@ -1,10 +1,10 @@
 import express from 'express'
-import { products } from '../../data/products.js'
 import productsService from "../services/productsService.js"
 const router = express.Router()
 
 //GET request for all products from product list
 router.get('/', (request, response) => {
+  const products = productsService.getAllProducts()
   response.json(products)
 })
 
