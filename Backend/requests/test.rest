@@ -8,10 +8,10 @@ POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-  "name": "",
-  "description": "",
-  "quantity": "rtert"
+  "name": "Testing Product",
+  "description": "Generic description",
+  "quantity": 80
 }
 
 ###
-DELETE http://localhost:3001/products/4
+DELETE http://localhost:3001/products/nQqpCZGubcO8geF6c9LP4
