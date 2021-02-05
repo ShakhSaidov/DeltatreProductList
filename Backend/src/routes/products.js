@@ -27,6 +27,7 @@ router.post('/', (request, response) => {
   try {
     const { error } = productsService.validateProduct(request.body)
     if (error) {
+      console.log("Error from Joi: ", error);
       return response.status(400).json({
         error: error.details.map(detail => detail.message)
       })
@@ -35,6 +36,7 @@ router.post('/', (request, response) => {
       response.json(newProduct)
     }
   } catch (e) {
+    console.log("Error from catch: ", e);
     response.status(400).json(e.message)
   }
 })
