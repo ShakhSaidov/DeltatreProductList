@@ -31,15 +31,15 @@ const Product = ({ handleAdd }) => {
           <form className="form-example" onSubmit={addProduct}>
             <div className="form-group">
               <label>Name: </label>
-              <input className="form-control" type="text" name="name" value={name} onChange={handleNameChange} />
+              <input className="form-control" required type="text" name="name" value={name} onChange={handleNameChange} />
             </div>
             <div className="form-group">
               <label>Description: </label>
-              <textarea className="form-control" rows="3" name="description" value={description} onChange={handleDescriptionChange} />
+              <textarea className="form-control" required type="text" rows="3" name="description" value={description} onChange={handleDescriptionChange}/>
             </div>
             <div className="form-group">
               <label>Qty. Available: </label>
-              <input className="form-control" type="text" name="quantity" value={quantity} onChange={handleQuantityChange} />
+              <input className="form-control" required type="number" min="0" name="quantity" value={quantity} onChange={handleQuantityChange} />
             </div>
             <div className="form-group center">
               <input className="btn btn-primary" type="submit" />
