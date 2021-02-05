@@ -16,7 +16,7 @@ const App = () => {
       .getList()
       .then(initialProducts => setProducts(initialProducts))
 
-    if(products.length === 0) {
+    if (products.length === 0) {
       setMessage("Product list seems empty! Maybe add some?")
     } else {
       setMessage(null)
@@ -25,10 +25,14 @@ const App = () => {
 
   const handleAdd = newProduct => {
     const newName = newProduct.name;
-    if(!products.find(product => product.name === newName)){
+    if (!products.find(product => product.name === newName)) {
       serverRoutes
-      .add(newProduct)
-      .then(returnedNewProduct => setProducts(products.concat(returnedNewProduct)))
+        .add(newProduct)
+        .then(returnedNewProduct => {
+          setProducts(products.concat(returnedNewProduct))
+        })
+        .catch(e => console.log(e))
+
     } else {
       setMessage("Product name already exists in the list!")
       setTimeout(() => {
@@ -51,9 +55,9 @@ const App = () => {
   return (
     <div>
       <div className="center"><Message message={message} /></div>
-      {products.length !== 0 && <h1 className="center">Products List</h1> }
+      {products.length !== 0 && <h1 className="center">Products List</h1>}
       <Switch buttonLabel="Add new product" ref={productFormRef}>
-        <NewProductForm handleAdd={handleAdd}/>
+        <NewProductForm handleAdd={handleAdd} />
       </Switch>
       <div>
         {products.map((product, index) =>
