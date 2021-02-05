@@ -6,8 +6,8 @@ import data from '../../data/products.js'
 const validateProduct = product => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    description: Joi.string().min(5).required(),
-    quantity: Joi.number().integer().min(0)
+    description: Joi.string().required(),
+    quantity: Joi.number().min(0).required()
   })
   .options({abortEarly: false})
 
@@ -25,7 +25,7 @@ const addProduct = object => {
   const productToAdd = {
     name: object.name,
     description: object.description,
-    quantity: object.quantity || 0,
+    quantity: object.quantity,
     id: nanoid()
   }
 
