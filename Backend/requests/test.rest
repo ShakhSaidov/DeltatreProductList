@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
   "name": "Testing Product",
-  "description": "Generic description",
+  "description": "Generic product description",
   "quantity": 99
 }
 
