@@ -1,9 +1,15 @@
 GET http://localhost:3001
 
-###
+### Product list
 GET http://localhost:3001/products
 
-###
+### Single product
+GET http://localhost:3001/products/w11H5lBZ2UPC5P6Hi9RzT
+
+### Invalid product
+GET http://localhost:3001/products/qewtq
+
+### Adding product
 POST http://localhost:3001/products
 Content-Type: application/json
 
@@ -13,5 +19,5 @@ Content-Type: application/json
   "quantity": 99
 }
 
-###
-DELETE http://localhost:3001/products/8zIz7WPP5ICSQwGm4OVu_
+### Removing product
+DELETE http://localhost:3001/products/weryweyr

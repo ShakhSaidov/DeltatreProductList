@@ -1,5 +1,6 @@
 import express from 'express'
 import productsService from "../services/productsService.js"
+import logger from "../../utils/logger.js"
 const router = express.Router()
 
 //GET request for all products from product list
@@ -10,15 +11,11 @@ router.get('/', (request, response) => {
 
 //GET request for a specific product
 router.get('/:id', (request, response) => {
-  try {
-    const product = productsService.findProductByID(request.params.id)
-    if (product) {
-      response.json(product)
-    } else {
-      response.status(404).end()
-    }
-  } catch (e) {
-    response.status(400).json(e.message)
+  const product = productsService.findProductByID(request.params.id)
+  if (product) {
+    return response.json(product)
+  } else {
+    return response.status(400).send({ error: "invalid id" })
   }
 })
 
@@ -27,7 +24,7 @@ router.post('/', (request, response) => {
   try {
     const { error } = productsService.validateProduct(request.body)
     if (error) {
-      console.log("Error from Joi: ", error);
+      logger.log("Error from Joi: ", error);
       return response.status(400).json({
         error: error.details.map(detail => detail.message)
       })
@@ -36,7 +33,7 @@ router.post('/', (request, response) => {
       response.json(newProduct)
     }
   } catch (e) {
-    console.log("Error from catch: ", e);
+    logger.log("Error from catch: ", e);
     response.status(400).json(e.message)
   }
 })
