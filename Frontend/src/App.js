@@ -15,13 +15,10 @@ const App = () => {
     serverRoutes
       .getList()
       .then(initialProducts => setProducts(initialProducts))
+  }, [])
 
-    if (products.length === 0) {
-      setMessage("Product list seems empty! Maybe add some?")
-    } else {
-      setMessage(null)
-    }
-  }, [products.length])
+  console.log("Products is: ", products);
+  console.log("Products length is: ", products.length);
 
   const handleAdd = newProduct => {
     const newName = newProduct.name;
@@ -54,7 +51,15 @@ const App = () => {
 
   return (
     <div>
-      <div className="center"><Message message={message} /></div>
+      <meta
+        name="viewport"
+        content="minimum-scale=1, initial-scale=1, width=device-width"
+      />
+      <div className="center">
+        <Message
+          message={message}
+          empty={products.length === 0 ? true : false}/>
+      </div>
       {products.length !== 0 && <h1 className="center">Products List</h1>}
       <Switch buttonLabel="Add new product" ref={productFormRef}>
         <NewProductForm handleAdd={handleAdd} />
