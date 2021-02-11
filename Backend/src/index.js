@@ -14,7 +14,7 @@ app.use('/products', productRouter)
 
 //Homepage
 app.get('/', (request, response) => {
-  response.send("Deltatre Products List Assignment")
+    response.send("Deltatre Products List Assignment")
 })
 
 //error handler
@@ -23,5 +23,5 @@ app.use(middleware.errorHandler)
 //Server
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  logger.log(`Server is running on port ${PORT}`);
+    logger.log(`Server is running on port ${PORT}`)
 })
