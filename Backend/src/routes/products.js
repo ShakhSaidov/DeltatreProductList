@@ -2,12 +2,14 @@ const express = require('express')
 const productsService = require('../services/productsService')
 
 const router = express.Router()
+const etag = null
 
 //GET request for all products from product list
 router.get('/', (request, response, next) => {
     try {
         const products = productsService.getAllProducts()
         response.json(products)
+        console.log("Etag is: ", response.getHeader('Etag'))
     } catch (error) {
         next(error)
     }

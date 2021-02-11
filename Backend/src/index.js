@@ -11,6 +11,7 @@ app.use(cors())
 app.use(express.json())
 app.use(middleware.consoleLogger)
 app.use('/products', productRouter)
+app.set('etag', 'strong')
 
 //Homepage
 app.get('/', (request, response) => {
