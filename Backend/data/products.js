@@ -40,4 +40,4 @@ const data = {
   remove
 }
 
-export default data
+module.exports = data

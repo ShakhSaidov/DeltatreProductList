@@ -13,4 +13,4 @@ const logger = {
   error
 }
 
-export default logger
+module.exports = logger

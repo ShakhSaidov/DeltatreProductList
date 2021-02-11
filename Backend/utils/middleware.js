@@ -1,4 +1,4 @@
-import logger from './logger.js'
+const logger = require('./logger')
 
 const consoleLogger = (request, response, next) => {
   logger.log('Method:', request.method)
@@ -18,4 +18,4 @@ const middleware = {
   errorHandler
 }
 
-export default middleware
+module.exports = middleware

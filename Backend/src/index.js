@@ -1,8 +1,9 @@
-import express from 'express'
-import cors from 'cors'
-import productRouter from './routes/products.js'
-import middleware from '../utils/middleware.js'
-import logger from '../utils/logger.js'
+const express = require('express')
+const cors = require('cors')
+const productRouter = require('./routes/products')
+const middleware = require('../utils/middleware')
+const logger = require('../utils/logger')
+
 const app = express()
 
 

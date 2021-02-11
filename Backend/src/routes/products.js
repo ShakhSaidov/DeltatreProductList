@@ -1,5 +1,6 @@
-import express from 'express'
-import productsService from "../services/productsService.js"
+const express = require('express')
+const productsService = require('../services/productsService')
+
 const router = express.Router()
 
 //GET request for all products from product list
@@ -53,4 +54,4 @@ router.delete('/:id', (request, response, next) => {
   }
 })
 
-export default router
+module.exports = router

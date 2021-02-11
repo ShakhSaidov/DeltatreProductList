@@ -20,4 +20,4 @@ Content-Type: application/json
 }
 
 ### Removing product
-DELETE http://localhost:3001/products/weryweyr
+DELETE http://localhost:3001/products/WsY9WlafbRlDc7gGYD3_w

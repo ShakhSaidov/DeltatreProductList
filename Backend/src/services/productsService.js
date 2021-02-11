@@ -1,6 +1,6 @@
-import Joi from 'joi'
-import { nanoid } from 'nanoid'
-import data from '../../data/products.js'
+const Joi = require('joi')
+const { nanoid } = require('nanoid')
+const data = require('../../data/products')
 
 //Function to validate product content
 const validateProduct = product => {
@@ -44,10 +44,12 @@ const deleteProduct = id => {
   data.remove(id)
 }
 
-export default {
+const productsService = {
   validateProduct,
   getAllProducts,
   findProductByID,
   addProduct,
   deleteProduct
 }
+
+module.exports = productsService
