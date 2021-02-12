@@ -21,4 +21,4 @@ Content-Type: application/json
 }
 
 ### Removing product
-DELETE http://localhost:3001/products/A8F-v_KctRJbZ8FFaZu1K
+DELETE http://localhost:3001/products/uUVJqm46fowvGOT_SQBLa

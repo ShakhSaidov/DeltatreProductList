@@ -52,7 +52,7 @@ describe('Testing Backend', () => {
         })
     })
 
-    //Testing the addition of new products - POST
+    //Testing the addition of a new product - POST
     describe('> Adding a new product', () => {
         test('Success when given valid data', async () => {
             const newProduct = {
@@ -143,6 +143,7 @@ describe('Testing Backend', () => {
         })
     })
 
+    //Testing the deletion of a product - DELETE
     describe('> Deleting a product', () => {
         test('Success when deleting an existing product', async () => {
             const products = await testData.getProducts()

@@ -16,7 +16,6 @@ router.get('/:id', async (request, response) => {
         return response.json(product)
     } else {
         return response.status(400).send({ error: "invalid id" })
-
     }
 })
 
@@ -28,7 +27,7 @@ router.post('/', async (request, response) => {
             error: error.details.map(detail => detail.message)
         })
     } else {
-        const newProduct = productsService.addProduct(request.body)
+        const newProduct = await productsService.addProduct(request.body)
         response.json(newProduct)
     }
 })
@@ -37,7 +36,6 @@ router.post('/', async (request, response) => {
 router.delete('/:id', async (request, response) => {
     await productsService.deleteProduct(request.params.id)
     response.status(204).end()
-
 })
 
 module.exports = router
