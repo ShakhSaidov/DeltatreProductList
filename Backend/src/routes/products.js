@@ -3,6 +3,11 @@ const productsService = require('../services/productsService')
 
 const router = express.Router()
 
+//HEAD request
+router.head('/', async (request, response) => {
+
+})
+
 //GET request for all products from product list
 router.get('/', async (request, response) => {
     const products = await productsService.getAllProducts()
@@ -23,7 +28,7 @@ router.get('/:id', async (request, response) => {
 router.post('/', async (request, response) => {
     const { error } = await productsService.validateProduct(request.body)
     if (error) {
-        return response.status(400).json({
+        return response.status(422).json({
             error: error.details.map(detail => detail.message)
         })
     } else {
