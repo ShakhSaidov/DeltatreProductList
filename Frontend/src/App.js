@@ -69,9 +69,7 @@ const App = () => {
                 content="minimum-scale=1, initial-scale=1, width=device-width"
             />
             <div className="center">
-                <Message
-                    message={message}
-                    empty={empty} />
+                <Message message={message} empty={empty} />
             </div>
             {products.length !== 0 && <h1 className="center">Products List</h1>}
             <Switch buttonLabel="Add new product" ref={productFormRef}>
