@@ -1,6 +1,14 @@
 const Joi = require('joi')
 const { nanoid } = require('nanoid')
-const data = require('../../data/products')
+let data
+
+/*eslint-disable */
+if (process.env.NODE_ENV === 'test') {
+    data = require('../../tests/testData')
+} else {
+    data = require('../../data/products')
+}
+/*eslint-enable */
 
 //Function to validate product content
 const validateProduct = product => {

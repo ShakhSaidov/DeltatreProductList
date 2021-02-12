@@ -1,11 +1,10 @@
 const express = require('express')
 const cors = require('cors')
+require('express-async-errors')
 const productRouter = require('./routes/products')
 const middleware = require('../utils/middleware')
-const logger = require('../utils/logger')
 
 const app = express()
-
 
 app.use(cors())
 app.use(express.json())
@@ -21,8 +20,4 @@ app.get('/', (request, response) => {
 //error handler
 app.use(middleware.errorHandler)
 
-//Server
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-    logger.log(`Server is running on port ${PORT}`)
-})
+module.exports = app
