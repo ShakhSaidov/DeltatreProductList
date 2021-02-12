@@ -5,21 +5,31 @@ import NewProductForm from './components/NewProductForm'
 import Message from './components/Message'
 import Switch from './components/Switch'
 import './App.css'
+import socketIOClient from 'socket.io-client'
 
 const App = () => {
     const [products, setProducts] = useState([])
     const [message, setMessage] = useState(null)
+    const [empty, setEmpty] = useState(false)
     const productFormRef = useRef()
+
+    useEffect(() => {
+        const socket = socketIOClient('http://localhost:3000')
+        console.log("Connected to socket: ", socket)
+    }, [])
 
     useEffect(() => {
         serverRoutes
             .getList()
             .then(response => {
                 setProducts(response)
+                response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-    }, [])
+    }, [products.length])
 
     console.log("Products length is: ", products.length);
+    console.log("Products are: ", products);
+
 
     const handleAdd = newProduct => {
         const newName = newProduct.name;
@@ -46,7 +56,9 @@ const App = () => {
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
             serverRoutes
                 .remove(id)
-                .then(setProducts(products.filter(product => product.id !== id)))
+                .then(() => {
+                    setProducts(products.filter(product => product.id !== id))
+                })
         }
     }
 
@@ -59,7 +71,7 @@ const App = () => {
             <div className="center">
                 <Message
                     message={message}
-                    empty={products.length === 0 ? true : false} />
+                    empty={empty} />
             </div>
             {products.length !== 0 && <h1 className="center">Products List</h1>}
             <Switch buttonLabel="Add new product" ref={productFormRef}>
