@@ -1,3 +1,5 @@
+const { nanoid } = require('nanoid')
+
 let testProducts = [
     {
         name: "DIVA",
@@ -19,6 +21,8 @@ let testProducts = [
     }
 ]
 
+
+//Helper functions
 const getProducts = () => testProducts
 
 const find = id => {
@@ -33,11 +37,14 @@ const remove = id => {
     testProducts = testProducts.filter(product => product.id !== id)
 }
 
+const generateNewID = () => nanoid()
+
 const testData = {
     getProducts,
     find,
     add,
-    remove
+    remove,
+    generateNewID,
 }
 
 module.exports = testData
