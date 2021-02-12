@@ -14,10 +14,11 @@ const App = () => {
     useEffect(() => {
         serverRoutes
             .getList()
-            .then(initialProducts => setProducts(initialProducts))
+            .then(response => {
+                setProducts(response)
+            })
     }, [])
 
-    console.log("Products is: ", products);
     console.log("Products length is: ", products.length);
 
     const handleAdd = newProduct => {
@@ -25,8 +26,8 @@ const App = () => {
         if (!products.find(product => product.name === newName)) {
             serverRoutes
                 .add(newProduct)
-                .then(returnedNewProduct => {
-                    setProducts(products.concat(returnedNewProduct))
+                .then(response => {
+                    setProducts(products.concat(response))
                 })
                 .catch(e => console.log(e))
 
