@@ -1,14 +1,6 @@
 const Joi = require('joi')
-const { nanoid } = require('nanoid')
-let data
-
-/*eslint-disable */
-if (process.env.NODE_ENV === 'test') {
-    data = require('../../tests/testData')
-} else {
-    data = require('../../data/products')
-}
-/*eslint-enable */
+const data = require('../../data/products')
+const products = new data()
 
 //Function to validate product content
 const validateProduct = product => {
@@ -23,14 +15,14 @@ const validateProduct = product => {
     return schema.validate(product)
 }
 
-//Function to receive the products data
+//Function to receive the products list
 const getAllProducts = () => {
-    return data.getProducts()
+    return products.getProducts()
 }
 
 //Function to find a product that has the given ID
 const findProductByID = id => {
-    const product = data.find(id)
+    const product = products.find(id)
     return product
 }
 
@@ -40,16 +32,16 @@ const addProduct = object => {
         name: object.name,
         description: object.description,
         quantity: object.quantity,
-        id: nanoid()
+        id: products.generateNewID()
     }
 
-    data.add(productToAdd)
+    products.add(productToAdd)
     return productToAdd
 }
 
 //Function to delete a given product from the products list
 const deleteProduct = id => {
-    data.remove(id)
+    products.remove(id)
 }
 
 const productsService = {

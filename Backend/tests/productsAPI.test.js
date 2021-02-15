@@ -1,13 +1,15 @@
 const supertest = require('supertest')
-const testData = require('./testData')
 const app = require('../src/app')
 const testAPI = supertest(app)
 
+let testData
 let initialDataSize
 
 describe('Testing Backend', () => {
     beforeEach(async () => {
-        initialDataSize = testData.getProducts().length
+        const response = await testAPI.get('/products')
+        testData = response.body
+        initialDataSize = testData.length
     })
 
     //Testing the product list as a whole - GET
@@ -34,8 +36,7 @@ describe('Testing Backend', () => {
     //Testing a specific product - GET
     describe('> Testing a specific product', () => {
         test('Success when given a valid id', async () => {
-            const products = await testData.getProducts()
-            const firstProduct = products[0]
+            const firstProduct = testData[0]
             const returnedProduct = await testAPI
                 .get(`/products/${firstProduct.id}`)
                 .expect(200)
@@ -45,10 +46,19 @@ describe('Testing Backend', () => {
         })
 
         test('Failure when given an invalid id', async () => {
-            const invalidID = await testData.generateNewID()
+            const newProduct = {
+                name: "new test product",
+                description: "generic description",
+                quantity: 100
+            }
+
+            const response = await testAPI.post('/products').send(newProduct)
+            const invalidID = response.body.id
+            await testAPI.delete(`/products/${invalidID}`)
+
             await testAPI
                 .get(`/products/${invalidID}`)
-                .expect(400)
+                .expect(404)
         })
     })
 
@@ -67,7 +77,8 @@ describe('Testing Backend', () => {
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
 
-            const productsAfterAddition = await testData.getProducts()
+            const response = await testAPI.get('/products')
+            const productsAfterAddition = response.body
             expect(productsAfterAddition.length).toBe(initialDataSize + 1)
 
             const productNames = productsAfterAddition.map(product => product.name)
@@ -85,9 +96,10 @@ describe('Testing Backend', () => {
                 await testAPI
                     .post('/products')
                     .send(newProduct)
-                    .expect(400)
+                    .expect(422)
 
-                const productsAfterAddition = await testData.getProducts()
+                const response = await testAPI.get('/products')
+                const productsAfterAddition = response.body
                 expect(productsAfterAddition.length).toBe(initialDataSize)
             })
 
@@ -101,9 +113,10 @@ describe('Testing Backend', () => {
                 await testAPI
                     .post('/products')
                     .send(newProduct)
-                    .expect(400)
+                    .expect(422)
 
-                const productsAfterAddition = await testData.getProducts()
+                const response = await testAPI.get('/products')
+                const productsAfterAddition = response.body
                 expect(productsAfterAddition.length).toBe(initialDataSize)
             })
 
@@ -118,9 +131,10 @@ describe('Testing Backend', () => {
                     await testAPI
                         .post('/products')
                         .send(newProduct)
-                        .expect(400)
+                        .expect(422)
 
-                    const productsAfterAddition = await testData.getProducts()
+                    const response = await testAPI.get('/products')
+                    const productsAfterAddition = response.body
                     expect(productsAfterAddition.length).toBe(initialDataSize)
                 })
 
@@ -134,9 +148,10 @@ describe('Testing Backend', () => {
                     await testAPI
                         .post('/products')
                         .send(newProduct)
-                        .expect(400)
+                        .expect(422)
 
-                    const productsAfterAddition = await testData.getProducts()
+                    const response = await testAPI.get('/products')
+                    const productsAfterAddition = response.body
                     expect(productsAfterAddition.length).toBe(initialDataSize)
                 })
             })
@@ -146,14 +161,14 @@ describe('Testing Backend', () => {
     //Testing the deletion of a product - DELETE
     describe('> Deleting a product', () => {
         test('Success when deleting an existing product', async () => {
-            const products = await testData.getProducts()
-            const productToDelete = products[0]
+            const productToDelete = testData[0]
 
             await testAPI
                 .delete(`/products/${productToDelete.id}`)
                 .expect(204)
 
-            const productsAfterDeletion = await testData.getProducts()
+            const response = await testAPI.get('/products')
+            const productsAfterDeletion = response.body
             expect(productsAfterDeletion.length).toBe(initialDataSize - 1)
 
             const productNames = productsAfterDeletion.map(product => product.name)

@@ -3,11 +3,6 @@ const productsService = require('../services/productsService')
 
 const router = express.Router()
 
-//HEAD request
-router.head('/', async (request, response) => {
-
-})
-
 //GET request for all products from product list
 router.get('/', async (request, response) => {
     const products = await productsService.getAllProducts()
@@ -20,7 +15,7 @@ router.get('/:id', async (request, response) => {
     if (product) {
         return response.json(product)
     } else {
-        return response.status(400).send({ error: "invalid id" })
+        return response.status(404).send({ error: "invalid id" })
     }
 })
 

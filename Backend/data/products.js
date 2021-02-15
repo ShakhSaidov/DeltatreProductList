@@ -1,4 +1,6 @@
-let products = [
+const { nanoid } = require('nanoid')
+
+const products = [
     {
         name: "DIVA",
         description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
@@ -19,25 +21,34 @@ let products = [
     }
 ]
 
-const getProducts = () => products
+class ProductsList {
+    constructor() {
+        this.data = products
+    }
 
-const find = id => {
-    return products.find(product => product.id === id)
+    getProducts() {
+        return this.data
+    }
+
+    find(id){
+        return this.data.find(product => product.id === id)
+    }
+
+    add(product){
+        this.data = this.data.concat(product)
+    }
+
+    remove(id){
+        this.data = this.data.filter(product => product.id !== id)
+    }
+
+    generateNewID(){
+        return nanoid()
+    }
+
+    getSize(){
+        return this.data.length
+    }
 }
 
-const add = product => {
-    products = products.concat(product)
-}
-
-const remove = id => {
-    products = products.filter(product => product.id !== id)
-}
-
-const data = {
-    getProducts,
-    find,
-    add,
-    remove
-}
-
-module.exports = data
+module.exports = ProductsList
