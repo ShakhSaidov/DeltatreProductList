@@ -5,18 +5,12 @@ import NewProductForm from './components/NewProductForm'
 import Message from './components/Message'
 import Switch from './components/Switch'
 import './App.css'
-import socketIOClient from 'socket.io-client'
 
 const App = () => {
     const [products, setProducts] = useState([])
     const [message, setMessage] = useState(null)
     const [empty, setEmpty] = useState(false)
     const productFormRef = useRef()
-
-    useEffect(() => {
-        const socket = socketIOClient('http://localhost:3000')
-        console.log("Connected to socket: ", socket)
-    }, [])
 
     useEffect(() => {
         serverRoutes

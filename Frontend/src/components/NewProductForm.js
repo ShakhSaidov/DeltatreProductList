@@ -1,18 +1,5 @@
 import React, { useState } from 'react'
-import {
-    Typography,
-    Paper,
-    Link,
-    Grid,
-    Button,
-    CssBaseline,
-    RadioGroup,
-    FormLabel,
-    MenuItem,
-    FormGroup,
-    FormControl,
-    FormControlLabel,
-} from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 
 const Product = ({ handleAdd }) => {
     const [name, setName] = useState('')
