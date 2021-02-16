@@ -8,15 +8,15 @@ describe('Products List data class functions work properly', () => {
         products = await testData.getProducts()
     })
 
-    test('> Products getter method works & Checking its size', () => {
+    test('Products getter method works & Checking its size', () => {
         const size = testData.getSize()
 
         expect(products).not.toBe(null || undefined)
         expect(products.length).toBe(size)
     })
 
-    describe('Searching for a specific product', () => {
-        test('> Given a valid id', () => {
+    describe('> Searching for a specific product', () => {
+        test('Given a valid id', () => {
             const firstProduct = products[0]
             const receivedProduct = testData.find(firstProduct.id)
 
@@ -24,13 +24,13 @@ describe('Products List data class functions work properly', () => {
             expect(receivedProduct).toMatchObject(firstProduct)
         })
 
-        test('> Given an invalid id', () => {
+        test('Given an invalid id', () => {
             const receivedProduct = testData.find(-1)
             expect(receivedProduct).toBe(undefined)
         })
     })
 
-    test('> Adding a valid product to the list', () => {
+    test('Adding a valid product to the list', () => {
         const newProduct = {
             name: "Test product",
             description: "Product for test",
@@ -46,8 +46,8 @@ describe('Products List data class functions work properly', () => {
         expect(productNames).toContain("Test product")
     })
 
-    describe('Deleting a specific product', () => {
-        test('> Given a valid id', () => {
+    describe('> Deleting a specific product', () => {
+        test('Given a valid id', () => {
             const firstProduct = products[0]
             const sizeBefore = products.length
             testData.remove(firstProduct.id)
@@ -58,7 +58,7 @@ describe('Products List data class functions work properly', () => {
             expect(productNames).not.toContain(firstProduct.name)
         })
 
-        test('> Given an invalid id', () => {
+        test('Given an invalid id', () => {
             const sizeBefore = products.length
             testData.remove(-1)
             products = testData.getProducts()

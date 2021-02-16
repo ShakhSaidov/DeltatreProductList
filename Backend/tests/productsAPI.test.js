@@ -5,7 +5,7 @@ const testAPI = supertest(app)
 let testData
 let initialDataSize
 
-describe('Testing Backend', () => {
+describe('Testing the API', () => {
     beforeEach(async () => {
         const response = await testAPI.get('/products')
         testData = response.body
