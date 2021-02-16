@@ -30,24 +30,24 @@ class ProductsList {
         return this.data
     }
 
-    find(id){
+    getSize() {
+        return this.data.length
+    }
+
+    find(id) {
         return this.data.find(product => product.id === id)
     }
 
-    add(product){
+    add(product) {
         this.data = this.data.concat(product)
     }
 
-    remove(id){
+    remove(id) {
         this.data = this.data.filter(product => product.id !== id)
     }
 
-    generateNewID(){
+    generateNewID() {
         return nanoid()
-    }
-
-    getSize(){
-        return this.data.length
     }
 }
 
