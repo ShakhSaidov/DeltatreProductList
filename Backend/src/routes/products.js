@@ -4,6 +4,10 @@ const productsService = require('../services/productsService')
 const router = express.Router()
 
 //GET request for all products from product list
+router.head('/', async (request, response) => {
+})
+
+//GET request for all products from product list
 router.get('/', async (request, response) => {
     const products = await productsService.getAllProducts()
     response.json(products)
