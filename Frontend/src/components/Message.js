@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Message = ({ message, empty }) => {
     let text = message
@@ -13,6 +14,11 @@ const Message = ({ message, empty }) => {
         </div>
     )
 
+}
+
+Message.propTypes = {
+    message: PropTypes.string.isRequired,
+    empty: PropTypes.bool.isRequired
 }
 
 export default Message

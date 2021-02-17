@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
 
 const Switch = React.forwardRef((props, ref) => {
     const [visibility, setVisibility] = useState(false)
@@ -30,5 +31,9 @@ const Switch = React.forwardRef((props, ref) => {
 
     )
 })
+
+Switch.propTypes = {
+    buttonLabel: PropTypes.string.isRequired
+}
 
 export default Switch

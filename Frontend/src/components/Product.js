@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ProductInfo = ({ info, value }) => {
     return (
@@ -27,6 +28,17 @@ const Product = ({ product, number, handleRemove }) => {
             <button className="btn btn-primary center w-30" value={product.id} onClick={(event) => handleRemove(event, product.id, number)}>Remove</button>
         </div>
     )
+}
+
+ProductInfo.propTypes = {
+    info: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
+}
+
+Product.propTypes = {
+    product: PropTypes.object.isRequired,
+    number: PropTypes.number.isRequired,
+    handleRemove: PropTypes.func.isRequired
 }
 
 export default Product

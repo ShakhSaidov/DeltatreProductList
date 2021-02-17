@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Paper } from '@material-ui/core';
+import PropTypes from 'prop-types'
 
 const Product = ({ handleAdd }) => {
     const [name, setName] = useState('')
@@ -49,6 +50,10 @@ const Product = ({ handleAdd }) => {
             </div>
         </div>
     )
+}
+
+Product.propTypes = {
+    handleAdd: PropTypes.func.isRequired
 }
 
 export default Product
