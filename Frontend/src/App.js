@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import serverRoutes from './server/ProductsList'
-import Product from './components/Product'
-import NewProductForm from './components/NewProductForm'
-import Message from './components/Message'
-import Switch from './components/Switch'
-import './App.css'
+/* eslint-disable linebreak-style */
+import React, { useState, useEffect, useRef } from "react"
+import serverRoutes from "./server/ProductsList"
+import Product from "./components/Product"
+import NewProductForm from "./components/NewProductForm"
+import Message from "./components/Message"
+import Switch from "./components/Switch"
+import "./App.css"
 
 const App = () => {
     const [products, setProducts] = useState([])
@@ -22,7 +23,7 @@ const App = () => {
     }, [])
 
     const handleAdd = newProduct => {
-        const newName = newProduct.name;
+        const newName = newProduct.name
         if (!products.find(product => product.name === newName)) {
             serverRoutes
                 .add(newProduct)
@@ -78,4 +79,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default App

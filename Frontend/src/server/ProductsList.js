@@ -1,5 +1,5 @@
-import axios from 'axios'
-const rootUrl = '/products'
+import axios from "axios"
+const rootUrl = "/products"
 
 const getList = () => {
     const request = axios.get(rootUrl)

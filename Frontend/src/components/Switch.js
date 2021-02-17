@@ -1,11 +1,12 @@
-import React, { useState, useImperativeHandle } from 'react'
-import PropTypes from 'prop-types'
+/* eslint-disable linebreak-style */
+import React, { useState, useImperativeHandle } from "react"
+import PropTypes from "prop-types"
 
 const Switch = React.forwardRef((props, ref) => {
     const [visibility, setVisibility] = useState(false)
 
-    const hide = { display: visibility ? 'none' : '' }
-    const show = { display: visibility ? '' : 'none' }
+    const hide = { display: visibility ? "none" : "" }
+    const show = { display: visibility ? "" : "none" }
 
     const switchButton = () => {
         setVisibility(!visibility)
@@ -31,6 +32,8 @@ const Switch = React.forwardRef((props, ref) => {
 
     )
 })
+
+Switch.displayName = "Switch"
 
 Switch.propTypes = {
     buttonLabel: PropTypes.string.isRequired

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Paper } from '@material-ui/core';
-import PropTypes from 'prop-types'
+import React, { useState } from "react"
+import { Paper } from "@material-ui/core"
+import PropTypes from "prop-types"
 
 const Product = ({ handleAdd }) => {
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [quantity, setQuantity] = useState('')
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [quantity, setQuantity] = useState("")
 
     const handleNameChange = event => setName(event.target.value)
     const handleDescriptionChange = event => setDescription(event.target.value)
@@ -20,9 +20,9 @@ const Product = ({ handleAdd }) => {
             quantity: quantity,
         })
 
-        setName('')
-        setDescription('')
-        setQuantity('')
+        setName("")
+        setDescription("")
+        setQuantity("")
     }
 
     return (
