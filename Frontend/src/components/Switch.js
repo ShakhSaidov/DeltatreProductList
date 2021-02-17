@@ -1,13 +1,13 @@
 import React, { useState, useImperativeHandle } from 'react'
 
 const Switch = React.forwardRef((props, ref) => {
-    const [show, setShow] = useState(false)
+    const [visibility, setVisibility] = useState(false)
 
-    const hideWhenShown = { display: show ? 'none' : '' }
-    const showWhenShown = { display: show ? '' : 'none' }
+    const hide = { display: visibility ? 'none' : '' }
+    const show = { display: visibility ? '' : 'none' }
 
     const switchButton = () => {
-        setShow(!show)
+        setVisibility(!visibility)
     }
 
     useImperativeHandle(ref, () => {
@@ -18,10 +18,10 @@ const Switch = React.forwardRef((props, ref) => {
 
     return (
         <div className="container h-100">
-            <div className="form-group center" style={hideWhenShown}>
+            <div className="form-group center" style={hide}>
                 <button className="btn btn-primary" onClick={switchButton}>{props.buttonLabel}</button>
             </div>
-            <div className="form-group center" style={showWhenShown}>
+            <div className="form-group center" style={show}>
                 {props.children}
                 <button className="btn btn-primary" onClick={switchButton}>cancel</button>
             </div>

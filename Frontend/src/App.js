@@ -19,11 +19,7 @@ const App = () => {
                 setProducts(response)
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-    }, [products.length])
-
-    console.log("Products length is: ", products.length);
-    console.log("Products are: ", products);
-
+    }, [])
 
     const handleAdd = newProduct => {
         const newName = newProduct.name;
@@ -62,23 +58,22 @@ const App = () => {
                 name="viewport"
                 content="minimum-scale=1, initial-scale=1, width=device-width"
             />
-            <div className="center">
-                <Message message={message} empty={empty} />
-            </div>
+
+            <Message message={message} empty={empty} />
+
             {products.length !== 0 && <h1 className="center">Products List</h1>}
             <Switch buttonLabel="Add new product" ref={productFormRef}>
                 <NewProductForm handleAdd={handleAdd} />
             </Switch>
-            <div>
-                {products.map((product, index) =>
-                    <Product
-                        key={product.id}
-                        product={product}
-                        number={index + 1}
-                        handleRemove={handleRemove}
-                    />
-                )}
-            </div>
+
+            {products.map((product, index) =>
+                <Product
+                    key={product.id}
+                    product={product}
+                    number={index + 1}
+                    handleRemove={handleRemove}
+                />
+            )}
         </div>
     )
 }
