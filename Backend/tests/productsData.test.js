@@ -1,5 +1,6 @@
-const data = require('../data/products')
-const testData = new data()
+const ProductsList = require('../data/productsList')
+const data = require('../data/productsData')
+const testData = new ProductsList(data)
 
 let products
 
@@ -37,9 +38,9 @@ describe('Products List data class functions work properly', () => {
             quantity: 10
         }
 
+
         const sizeBefore = products.length
         testData.add(newProduct)
-        products = testData.getProducts()
 
         expect(products.length).toBe(sizeBefore + 1)
         const productNames = products.map(product => product.name)
@@ -48,10 +49,10 @@ describe('Products List data class functions work properly', () => {
 
     describe('> Deleting a specific product', () => {
         test('Given a valid id', () => {
+            console.log("First product is: ", products)
             const firstProduct = products[0]
             const sizeBefore = products.length
             testData.remove(firstProduct.id)
-            products = testData.getProducts()
 
             expect(products.length).toBe(sizeBefore - 1)
             const productNames = products.map(product => product.name)

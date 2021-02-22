@@ -14,9 +14,8 @@ router.get('/:id', async (request, response) => {
     const product = await productsService.findProductByID(request.params.id)
     if (product) {
         return response.json(product)
-    } else {
-        return response.status(404).send({ error: "invalid id" })
     }
+    return response.status(404).send({ error: "invalid id" })
 })
 
 //POST request to add a new product onto the product list
@@ -26,10 +25,11 @@ router.post('/', async (request, response) => {
         return response.status(422).json({
             error: error.details.map(detail => detail.message)
         })
-    } else {
-        const newProduct = await productsService.addProduct(request.body)
-        response.json(newProduct)
     }
+
+    const newProduct = await productsService.addProduct(request.body)
+    response.json(newProduct)
+
 })
 
 //DELETE request to remove a product form product list

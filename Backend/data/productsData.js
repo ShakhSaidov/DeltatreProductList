@@ -1,5 +1,4 @@
-const { nanoid } = require('nanoid')
-
+//create a separate file, store data outside, so u initialize data as productslist(products)
 const products = [
     {
         name: "DIVA",
@@ -21,34 +20,4 @@ const products = [
     }
 ]
 
-class ProductsList {
-    constructor() {
-        this.data = products
-    }
-
-    getProducts() {
-        return this.data
-    }
-
-    getSize() {
-        return this.data.length
-    }
-
-    find(id) {
-        return this.data.find(product => product.id === id)
-    }
-
-    add(product) {
-        this.data = this.data.concat(product)
-    }
-
-    remove(id) {
-        this.data = this.data.filter(product => product.id !== id)
-    }
-
-    generateNewID() {
-        return nanoid()
-    }
-}
-
-module.exports = ProductsList
+module.exports = products

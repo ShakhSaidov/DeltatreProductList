@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-require('express-async-errors')
+require('express-async-errors')                     //check if this works
 const productRouter = require('./routes/products')
 const middleware = require('../utils/middleware')
 

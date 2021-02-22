@@ -1,6 +1,7 @@
 const Joi = require('joi')
-const data = require('../../data/products')
-const products = new data()
+const ProductsList = require('../../data/productsList')
+const data = require('../../data/productsData')
+const products = new ProductsList(data)
 
 //Function to validate product content
 const validateProduct = product => {
@@ -15,6 +16,8 @@ const validateProduct = product => {
     return schema.validate(product)
 }
 
+//get rid of () =>
+
 //Function to receive the products list
 const getAllProducts = () => {
     return products.getProducts()
@@ -27,6 +30,7 @@ const findProductByID = id => {
 }
 
 //Function to add a product to the products list
+//try spread syntax, make it one-liner
 const addProduct = object => {
     const productToAdd = {
         name: object.name,
@@ -40,16 +44,15 @@ const addProduct = object => {
 }
 
 //Function to delete a given product from the products list
+//make it return a bool?
 const deleteProduct = id => {
     products.remove(id)
 }
 
-const productsService = {
+module.exports = {
     validateProduct,
     getAllProducts,
     findProductByID,
     addProduct,
     deleteProduct
 }
-
-module.exports = productsService
