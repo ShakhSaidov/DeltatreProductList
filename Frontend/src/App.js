@@ -8,9 +8,9 @@ import Switch from "./components/Switch"
 import "./App.css"
 
 const App = () => {
-    const [products, setProducts] = useState([])
-    const [message, setMessage] = useState(null)
-    const [empty, setEmpty] = useState(false)
+    const [products, setProducts] = useState({})            //use as object not array
+    const [message, setMessage] = useState(null)             //remove if possible, look into css z-index, or generally pro alerts
+    const [empty, setEmpty] = useState(false)       //make a loading action when getting the products
     const productFormRef = useRef()
 
     useEffect(() => {
@@ -27,9 +27,7 @@ const App = () => {
         if (!products.find(product => product.name === newName)) {
             serverRoutes
                 .add(newProduct)
-                .then(response => {
-                    setProducts(products.concat(response))
-                })
+                .then(response => setProducts(products.concat(response)))
                 .catch(e => console.log(e))
 
         } else {
@@ -38,12 +36,12 @@ const App = () => {
                 setMessage(null)
             }, 5000)
         }
+
         productFormRef.current.switchButton()
     }
 
     const handleRemove = (event, id, number) => {
-        event.preventDefault()
-
+        event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
             serverRoutes
                 .remove(id)
@@ -62,7 +60,7 @@ const App = () => {
 
             <Message message={message} empty={empty} />
 
-            {products.length !== 0 && <h1 className="center">Products List</h1>}
+            {products.length && <h1 className="center">Products List</h1>}
             <Switch buttonLabel="Add new product" ref={productFormRef}>
                 <NewProductForm handleAdd={handleAdd} />
             </Switch>
@@ -78,5 +76,5 @@ const App = () => {
         </div>
     )
 }
-
+//make products.map in its own product list component
 export default App

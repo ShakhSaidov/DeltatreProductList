@@ -1,6 +1,7 @@
 import axios from "axios"
 const rootUrl = "/products"
 
+//make one liner and change name
 const getList = () => {
     const request = axios.get(rootUrl)
     return request.then(response => response.data)
@@ -16,10 +17,8 @@ const remove = id => {
     return request.then(response => response.data)
 }
 
-const serverRoutes = {
+export {
     getList,
     add,
     remove
 }
-
-export default serverRoutes
