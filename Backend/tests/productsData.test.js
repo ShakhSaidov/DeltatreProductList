@@ -2,25 +2,29 @@ const ProductsList = require('../data/productsList')
 const data = require('../data/productsData')
 const testData = new ProductsList(data)
 
-let products
+let products, productKeys
 
 describe('Products List data class functions work properly', () => {
     beforeEach(async () => {
-        products = await testData.getProducts()
+        products = Object.values(testData.getProducts())
+        productKeys = Object.keys(testData.getProducts())
     })
 
     test('Products getter method works & Checking its size', () => {
         const size = testData.getSize()
-
         expect(products).not.toBe(null || undefined)
         expect(products.length).toBe(size)
     })
 
     describe('> Searching for a specific product', () => {
         test('Given a valid id', () => {
-            const firstProduct = products[0]
-            const receivedProduct = testData.find(firstProduct.id)
+            const firstProduct = {
+                name: "DIVA",
+                description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
+                quantity: 15,
+            }
 
+            const receivedProduct = testData.find(productKeys[0])
             expect(receivedProduct).not.toBe(undefined)
             expect(receivedProduct).toMatchObject(firstProduct)
         })
@@ -39,31 +43,25 @@ describe('Products List data class functions work properly', () => {
         }
 
 
-        const sizeBefore = products.length
         testData.add(newProduct)
-
-        expect(products.length).toBe(sizeBefore + 1)
-        const productNames = products.map(product => product.name)
+        expect(testData.getSize()).toBe(products.length + 1)
+        const productNames = Object.values(testData.getProducts()).map(product => product.name)
         expect(productNames).toContain("Test product")
     })
 
     describe('> Deleting a specific product', () => {
         test('Given a valid id', () => {
-            console.log("First product is: ", products)
-            const firstProduct = products[0]
-            const sizeBefore = products.length
-            testData.remove(firstProduct.id)
+            const firstProduct = productKeys[0]
+            testData.remove(firstProduct)
 
-            expect(products.length).toBe(sizeBefore - 1)
+            expect(testData.getSize()).toBe(products.length - 1)
             const productNames = products.map(product => product.name)
             expect(productNames).not.toContain(firstProduct.name)
         })
 
         test('Given an invalid id', () => {
-            const sizeBefore = products.length
             testData.remove(-1)
-            products = testData.getProducts()
-            expect(products.length).toBe(sizeBefore)
+            expect(testData.getSize()).toBe(products.length)
         })
     })
 })

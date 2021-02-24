@@ -3,56 +3,36 @@ const ProductsList = require('../../data/productsList')
 const data = require('../../data/productsData')
 const products = new ProductsList(data)
 
+//Validation schema defined
+const schema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    quantity: Joi.number().min(0).required()
+})  .options({ abortEarly: false })
+
 //Function to validate product content
-const validateProduct = product => {
-    //move outside function
-    const schema = Joi.object({
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-        quantity: Joi.number().min(0).required()
-    })
-        .options({ abortEarly: false })
-
-    return schema.validate(product)
-}
-
-//get rid of () =>
+const validateProduct = product => schema.validate(product)
 
 //Function to receive the products list
-const getAllProducts = () => {
-    return products.getProducts()
-}
+const getProducts = () => products.getProducts()
 
 //Function to find a product that has the given ID
-const findProductByID = id => {
-    const product = products.find(id)
-    return product
-}
+const findProduct = id => products.find(id)
 
 //Function to add a product to the products list
-//try spread syntax, make it one-liner
-const addProduct = object => {
-    const productToAdd = {
-        name: object.name,
-        description: object.description,
-        quantity: object.quantity,
-        id: products.generateNewID()
-    }
-
-    products.add(productToAdd)
-    return productToAdd
-}
+const addProduct = object => products.add(object)
 
 //Function to delete a given product from the products list
-//make it return a bool?
-const deleteProduct = id => {
-    products.remove(id)
-}
+const deleteProduct = id => products.remove(id)
+
+//Function to grab the product list size
+const getProductSize = () => products.getSize()
 
 module.exports = {
     validateProduct,
-    getAllProducts,
-    findProductByID,
+    getProducts,
+    findProduct,
     addProduct,
-    deleteProduct
+    deleteProduct,
+    getProductSize
 }

@@ -2,13 +2,13 @@ const supertest = require('supertest')
 const app = require('../src/app')
 const testAPI = supertest(app)
 
-let testData
-let initialDataSize
+let testData, testDataKeys, initialDataSize
 
 describe('Testing the API', () => {
     beforeEach(async () => {
         const response = await testAPI.get('/products')
-        testData = response.body
+        testData =  Object.values(response.body)
+        testDataKeys = Object.keys(response.body)
         initialDataSize = testData.length
     })
 
@@ -23,12 +23,11 @@ describe('Testing the API', () => {
 
         test('All initial products are returned', async () => {
             const response = await testAPI.get('/products')
-            expect(response.body.length).toBe(initialDataSize)
+            expect(Object.keys(response.body).length).toBe(initialDataSize)
         })
 
         test('FORGE is included in the returned products', async () => {
-            const response = await testAPI.get('/products')
-            const productNames = response.body.map(product => product.name)
+            const productNames = testData.map(product => product.name)
             expect(productNames).toContain('FORGE')
         })
     })
@@ -36,9 +35,10 @@ describe('Testing the API', () => {
     //Testing a specific product - GET
     describe('> Testing a specific product', () => {
         test('Success when given a valid id', async () => {
+            const firstProductKey = testDataKeys[0]
             const firstProduct = testData[0]
             const returnedProduct = await testAPI
-                .get(`/products/${firstProduct.id}`)
+                .get(`/products/${firstProductKey}`)
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
 
@@ -46,18 +46,8 @@ describe('Testing the API', () => {
         })
 
         test('Failure when given an invalid id', async () => {
-            const newProduct = {
-                name: "new test product",
-                description: "generic description",
-                quantity: 100
-            }
-
-            const response = await testAPI.post('/products').send(newProduct)
-            const invalidID = response.body.id
-            await testAPI.delete(`/products/${invalidID}`)
-
             await testAPI
-                .get(`/products/${invalidID}`)
+                .get(`/products/-1`)
                 .expect(404)
         })
     })
@@ -78,7 +68,7 @@ describe('Testing the API', () => {
                 .expect('Content-Type', /application\/json/)
 
             const response = await testAPI.get('/products')
-            const productsAfterAddition = response.body
+            const productsAfterAddition = Object.values(response.body)
             expect(productsAfterAddition.length).toBe(initialDataSize + 1)
 
             const productNames = productsAfterAddition.map(product => product.name)
@@ -99,7 +89,7 @@ describe('Testing the API', () => {
                     .expect(422)
 
                 const response = await testAPI.get('/products')
-                const productsAfterAddition = response.body
+                const productsAfterAddition = Object.values(response.body)
                 expect(productsAfterAddition.length).toBe(initialDataSize)
             })
 
@@ -116,7 +106,7 @@ describe('Testing the API', () => {
                     .expect(422)
 
                 const response = await testAPI.get('/products')
-                const productsAfterAddition = response.body
+                const productsAfterAddition = Object.values(response.body)
                 expect(productsAfterAddition.length).toBe(initialDataSize)
             })
 
@@ -134,7 +124,7 @@ describe('Testing the API', () => {
                         .expect(422)
 
                     const response = await testAPI.get('/products')
-                    const productsAfterAddition = response.body
+                    const productsAfterAddition = Object.values(response.body)
                     expect(productsAfterAddition.length).toBe(initialDataSize)
                 })
 
@@ -151,7 +141,7 @@ describe('Testing the API', () => {
                         .expect(422)
 
                     const response = await testAPI.get('/products')
-                    const productsAfterAddition = response.body
+                    const productsAfterAddition = Object.values(response.body)
                     expect(productsAfterAddition.length).toBe(initialDataSize)
                 })
             })
@@ -161,14 +151,14 @@ describe('Testing the API', () => {
     //Testing the deletion of a product - DELETE
     describe('> Deleting a product', () => {
         test('Success when deleting an existing product', async () => {
-            const productToDelete = testData[0]
+            const productToDelete = testDataKeys[0]
 
             await testAPI
-                .delete(`/products/${productToDelete.id}`)
-                .expect(204)
+                .delete(`/products/${productToDelete}`)
+                .expect(405)
 
             const response = await testAPI.get('/products')
-            const productsAfterDeletion = response.body
+            const productsAfterDeletion = Object.values(response.body)
             expect(productsAfterDeletion.length).toBe(initialDataSize - 1)
 
             const productNames = productsAfterDeletion.map(product => product.name)

@@ -9,27 +9,25 @@ class ProductsList {
         return this.data
     }
 
-    //getSize no need
     getSize() {
-        return this.data.length
+        return Object.keys(this.data).length
     }
 
-    //findProduct, addproduct, etc...
     find(id) {
-        return this.data.find(product => product.id === id)
+        return this.data[id]
     }
 
-    //add nanoid inside here, remove below
     add(product) {
-        this.data = this.data.push(product)
+        this.data[nanoid()] = product
+        return product
     }
 
     remove(id) {
-        this.data = this.data.filter(product => product.id !== id)
-    }
+        const sizeBefore = this.data.length
+        delete this.data[id]
 
-    generateNewID() {
-        return nanoid()
+        if(this.data.length != sizeBefore) return true
+        else return false
     }
 }
 
