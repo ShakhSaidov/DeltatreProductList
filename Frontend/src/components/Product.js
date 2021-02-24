@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import React from "react"
-import PropTypes from "prop-types"
 
 const ProductInfo = ({ info, value }) => {
     return (
@@ -15,31 +14,22 @@ const ProductInfo = ({ info, value }) => {
     )
 }
 
-const Product = ({ product, number, handleRemove }) => {
-    return (
-        <div className="card text-center w-50 p-1 m-5">
-            <div className="card-body">
-                <h2 className="card-title">Product {number}</h2>
-                <ul className="center list-group-flush align-items-stretch">
-                    <ProductInfo info="Name" value={product.name} />
-                    <ProductInfo info="Description" value={product.description} />
-                    <ProductInfo info="Qty. Available" value={product.quantity} />
-                </ul>
+const Product = ({ id, product, number, handleRemove }) => {
+    if (product) {
+        return (
+            <div className="card text-center w-50 p-1 m-5">
+                <div className="card-body">
+                    <h2 className="card-title">Product {number}</h2>
+                    <ul className="center list-group-flush align-items-stretch">
+                        <ProductInfo info="Name" value={product.name} />
+                        <ProductInfo info="Description" value={product.description} />
+                        <ProductInfo info="Qty. Available" value={product.quantity} />
+                    </ul>
+                </div>
+                <button className="btn btn-primary center w-30" value={id} onClick={(event) => handleRemove(event, id, number)}>Remove</button>
             </div>
-            <button className="btn btn-primary center w-30" value={product.id} onClick={(event) => handleRemove(event, product.id, number)}>Remove</button>
-        </div>
-    )
-}
-
-ProductInfo.propTypes = {
-    info: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
-}
-
-Product.propTypes = {
-    product: PropTypes.object.isRequired,
-    number: PropTypes.number.isRequired,
-    handleRemove: PropTypes.func.isRequired
+        )
+    } else return null
 }
 
 export default Product

@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect, useRef } from "react"
 import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
-import Product from "./components/Product"
+import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
 import Message from "./components/Message"
 import Switch from "./components/Switch"
@@ -9,11 +9,12 @@ import "./App.css"
 
 const App = () => {
     const [data, setData] = useState({})
-    const [productKeys, setProductKeys] = useState([])
-    const [products, setProducts] = useState([])            //use as object not array
     const [message, setMessage] = useState(null)             //remove if possible, look into css z-index, or generally pro alerts
     const [empty, setEmpty] = useState(false)       //make a loading action when getting the products
     const productFormRef = useRef()
+
+    let productKeys = Object.keys(data)
+    let products = Object.values(data)
 
     useEffect(() => {
         getProducts()
@@ -21,23 +22,17 @@ const App = () => {
                 setData(response)
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-
-        const keys = Object.keys(data)
-        const values = Object.values(data)
-        setProductKeys(keys)
-        setProducts(values)
-        console.log("Data is:", data)
-        console.log("Keys is:", productKeys)
-        console.log("Products is:", products)
     }, [data])
 
-
+    console.log("Data is:", data)
+    console.log("Keys is:", productKeys)
+    console.log("Products is:", products)
 
     const handleAdd = newProduct => {
         const newName = newProduct.name
         if (!products.find(product => product.name === newName)) {
             addProduct(newProduct)
-                .then(response => setProducts(products.concat(response)))
+                .then(response => setData(...response))
                 .catch(e => console.log(e))
 
         } else {
@@ -51,11 +46,13 @@ const App = () => {
     }
 
     const handleRemove = (event, id, number) => {
+        console.log("Id to delete is: ", id)
         event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
             removeProduct(id)
                 .then(() => {
                     delete data[id]
+                    setData(data)
                 })
         }
     }
@@ -69,21 +66,20 @@ const App = () => {
 
             <Message message={message} empty={empty} />
 
-            {products.length && <h1 className="center">Products List</h1>}
+            {data && <h1 className="center">Products List</h1>}
             <Switch buttonLabel="Add new product" ref={productFormRef}>
                 <NewProductForm handleAdd={handleAdd} />
             </Switch>
 
-            {productKeys.map((id, index) =>
-                <Product
-                    key={id}
-                    product={products[id]}
-                    number={index + 1}
+            {data &&
+                <ProductList
+                    productKeys={productKeys}
+                    products={products}
                     handleRemove={handleRemove}
                 />
-            )}
+            }
         </div>
     )
 }
-//make products.map in its own product list component
+
 export default App
