@@ -22,7 +22,7 @@ const App = () => {
                 setData(response)
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-    }, [data])
+    }, [])
 
     console.log("Data is:", data)
     console.log("Keys is:", productKeys)
