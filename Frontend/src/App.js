@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect, useRef } from "react"
-import serverRoutes from "./server/ProductsList"
+import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import Product from "./components/Product"
 import NewProductForm from "./components/NewProductForm"
 import Message from "./components/Message"
@@ -8,25 +8,35 @@ import Switch from "./components/Switch"
 import "./App.css"
 
 const App = () => {
-    const [products, setProducts] = useState({})            //use as object not array
+    const [data, setData] = useState({})
+    const [productKeys, setProductKeys] = useState([])
+    const [products, setProducts] = useState([])            //use as object not array
     const [message, setMessage] = useState(null)             //remove if possible, look into css z-index, or generally pro alerts
     const [empty, setEmpty] = useState(false)       //make a loading action when getting the products
     const productFormRef = useRef()
 
     useEffect(() => {
-        serverRoutes
-            .getList()
+        getProducts()
             .then(response => {
-                setProducts(response)
+                setData(response)
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-    }, [])
+
+        const keys = Object.keys(data)
+        const values = Object.values(data)
+        setProductKeys(keys)
+        setProducts(values)
+        console.log("Data is:", data)
+        console.log("Keys is:", productKeys)
+        console.log("Products is:", products)
+    }, [data])
+
+
 
     const handleAdd = newProduct => {
         const newName = newProduct.name
         if (!products.find(product => product.name === newName)) {
-            serverRoutes
-                .add(newProduct)
+            addProduct(newProduct)
                 .then(response => setProducts(products.concat(response)))
                 .catch(e => console.log(e))
 
@@ -43,10 +53,9 @@ const App = () => {
     const handleRemove = (event, id, number) => {
         event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
-            serverRoutes
-                .remove(id)
+            removeProduct(id)
                 .then(() => {
-                    setProducts(products.filter(product => product.id !== id))
+                    delete data[id]
                 })
         }
     }
@@ -65,10 +74,10 @@ const App = () => {
                 <NewProductForm handleAdd={handleAdd} />
             </Switch>
 
-            {products.map((product, index) =>
+            {productKeys.map((id, index) =>
                 <Product
-                    key={product.id}
-                    product={product}
+                    key={id}
+                    product={products[id]}
                     number={index + 1}
                     handleRemove={handleRemove}
                 />
