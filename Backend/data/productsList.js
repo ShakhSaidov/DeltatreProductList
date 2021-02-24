@@ -19,14 +19,14 @@ class ProductsList {
 
     add(product) {
         this.data[nanoid()] = product
-        return product
+        return this.data
     }
 
     remove(id) {
-        const sizeBefore = this.data.length
+        const sizeBefore = this.getSize()
         delete this.data[id]
 
-        if(this.data.length != sizeBefore) return true
+        if(this.getSize() !== sizeBefore) return true
         else return false
     }
 }

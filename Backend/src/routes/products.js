@@ -26,12 +26,13 @@ router.post('/', async (request, response) => {
         })
     }
 
-    const newProduct = await productsService.addProduct(request.body)
-    response.json(newProduct)
+    const newProducts = await productsService.addProduct(request.body)
+    response.json(newProducts)
 })
 
 //DELETE request to remove a product form product list
 router.delete('/:id', async (request, response) => {
+    console.log("Id is: ", request.params.id)
     const success = await productsService.deleteProduct(request.params.id)
     if(success) response.status(204).end()
     else response.status(405).send({ error: "Can't perform method" })
