@@ -26,7 +26,7 @@ const Product = ({ id, product, number, handleRemove }) => {
                         <ProductInfo info="Qty. Available" value={product.quantity} />
                     </ul>
                 </div>
-                <button className="btn btn-primary center w-30" value={id} onClick={(event) => handleRemove(event, id, number)}>Remove</button>
+                <button className="btn btn-primary center w-30" value={id} onClick={(event) => handleRemove(event, id)}>Remove</button>
             </div>
         )
     } else return null

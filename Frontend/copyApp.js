@@ -9,6 +9,7 @@ import "./App.css"
 
 const App = () => {
     const [data, setData] = useState({})
+    const [etag, setEtag] = useState("")
     const [message, setMessage] = useState(null)             //remove if possible, look into css z-index, or generally pro alerts
     const [empty, setEmpty] = useState(false)       //make a loading action when getting the products
     const productFormRef = useRef()
@@ -17,18 +18,30 @@ const App = () => {
     let products = Object.values(data)
 
     useEffect(() => {
+        console.log("Entered useEffect()")
         getProducts()
             .then(response => {
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
-                if(response.status !== 304) setData(response.data)
+                console.log("Response status is: ", response.status)
+                if (response.status !== 304) {
+                    setData(response.data)
+                    setEtag(response.headers["etag"])
+                }
             })
-    }, [data])
+    }, [etag])
+
+    console.log("Data is: ", data)
+    console.log("Data length is:", products.length)
+    console.log("Etag is: ", etag)
 
     const handleAdd = newProduct => {
         const newName = newProduct.name
         if (!products.find(product => product.name === newName)) {
             addProduct(newProduct)
-                .then(response => setData(response.data))
+                .then(response => {
+                    setEtag(response.headers["etag"])
+                    console.log("Data length after addition:", products.length)
+                })
                 .catch(e => console.log(e))
 
         } else {
@@ -41,22 +54,16 @@ const App = () => {
         productFormRef.current.switchButton()
     }
 
-    const handleRemove = (event, id, number) => {
-        console.log("Id to delete is: ", id)
-        event.preventDefault() //remove confirm, too extra
-        if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
-            removeProduct(id)
-                .then(response => {
-                    console.log("Deletion response: ", response)
-                    if (response.status === 204) {
-                        console.log("Data before deletion: ", data)
-                        delete data[id]
-                        setData(data)
-                        console.log("Data after deletion: ", data)
-                    }
-                })
-                .catch(e => console.log(e))
-        }
+    const handleRemove = (event, id) => {
+        console.log("Entered the remove function, id to remove is: ", id)
+        event.preventDefault()
+        removeProduct(id)
+            .then(response => {
+                console.log("Etag after deletion: ", response.headers["etag"])
+                setEtag(response.headers["etag"])
+                console.log("Data length after deletion:", products.length)
+            })
+            .catch(e => console.log(e))
     }
 
     return (

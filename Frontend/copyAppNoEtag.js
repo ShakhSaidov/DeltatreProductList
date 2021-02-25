@@ -50,7 +50,6 @@ const App = () => {
                     console.log("Deletion response: ", response)
                     if (response.status === 204) {
                         console.log("Data before deletion: ", data)
-                        delete data[id]
                         setData(data)
                         console.log("Data after deletion: ", data)
                     }
@@ -61,6 +60,11 @@ const App = () => {
 
     return (
         <div>
+            <meta
+                name="viewport"
+                content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+
             <Message message={message} empty={empty} />
 
             {data && <h1 className="center">Products List</h1>}
