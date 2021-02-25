@@ -9,6 +9,7 @@ import "./App.css"
 
 const App = () => {
     const [data, setData] = useState({})
+    const [etag, setEtag] = useState("")
     const [message, setMessage] = useState(null)             //remove if possible, look into css z-index, or generally pro alerts
     const [empty, setEmpty] = useState(false)       //make a loading action when getting the products
     const productFormRef = useRef()
@@ -19,20 +20,23 @@ const App = () => {
     useEffect(() => {
         getProducts()
             .then(response => {
-                setData(response)
+                setData(response.data)
+                setEtag(response.headers["etag"])
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
             })
-    }, [])
-
-    console.log("Data is:", data)
-    console.log("Keys is:", productKeys)
-    console.log("Products is:", products)
+    }, [etag])
+    console.log("Data is: ", data)
+    console.log("Data length is:", products.length)
+    console.log("Etag is: ", etag)
 
     const handleAdd = newProduct => {
         const newName = newProduct.name
         if (!products.find(product => product.name === newName)) {
             addProduct(newProduct)
-                .then(response => setData(...response))
+                .then(response => {
+                    setEtag(response.headers["etag"])
+                    console.log("Data length after addition:", products.length)
+                })
                 .catch(e => console.log(e))
 
         } else {
@@ -46,14 +50,14 @@ const App = () => {
     }
 
     const handleRemove = (event, id, number) => {
-        console.log("Id to delete is: ", id)
         event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
             removeProduct(id)
-                .then(() => {
-                    delete data[id]
-                    setData(data)
+                .then(response => {
+                    setEtag(response.headers["etag"])
+                    console.log("Data length after deletion:", products.length)
                 })
+                .catch(e => console.log(e))
         }
     }
 
