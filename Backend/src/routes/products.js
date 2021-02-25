@@ -2,20 +2,15 @@ const express = require('express')
 const productsService = require('../services/productsService')
 
 const router = express.Router()
-let etag, newEtag
+//let etag, newEtag
 
 //GET request for all products from product list
 router.get('/', async (request, response) => {
-    newEtag = request.header('if-none-match')
-    console.log("If-none-match: ", newEtag)
-
-    if (newEtag !== undefined && newEtag === etag) return response.status(304)
-
     const products = await productsService.getProducts()
-    response.set('Cache-control', 'public, max-age=300')
+    response.set('Cache-Control', 'private')
     response.json(products)
-    etag = response.getHeader('Etag')
-    console.log("Etag: ", etag)
+
+
 })
 
 //GET request for a specific product
@@ -45,9 +40,15 @@ router.delete('/:id', async (request, response) => {
     const modifiedProducts = await productsService.deleteProduct(request.params.id)
     const sizeAfter = await productsService.getProductSize()
 
-    if (sizeBefore !== sizeAfter) return response.json(modifiedProducts)
+    console.log("products after deletion: ", modifiedProducts)
+    if (sizeAfter !== sizeBefore) return response.status(204).json(modifiedProducts)
+    else return response.status(405).send({ error: "Can't perform method" })
+    /*
+    const success = await productsService.deleteProduct(request.params.id)
+    if (success) response.status(204).end()
+    else response.status(405).send({ error: "Can't perform method" })
 
-    return response.status(405).send({ error: "Can't perform method" })
+    */
 })
 
 module.exports = router
