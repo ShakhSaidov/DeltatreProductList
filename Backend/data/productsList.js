@@ -23,11 +23,8 @@ class ProductsList {
     }
 
     remove(id) {
-        const sizeBefore = this.getSize()
         delete this.data[id]
-
-        if(this.getSize() !== sizeBefore) return true
-        else return false
+        return this.data
     }
 }
 

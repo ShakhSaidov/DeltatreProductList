@@ -7,7 +7,7 @@ let testData, testDataKeys, initialDataSize
 describe('Testing the API', () => {
     beforeEach(async () => {
         const response = await testAPI.get('/products')
-        testData =  Object.values(response.body)
+        testData = Object.values(response.body)
         testDataKeys = Object.keys(response.body)
         initialDataSize = testData.length
     })
@@ -155,7 +155,7 @@ describe('Testing the API', () => {
 
             await testAPI
                 .delete(`/products/${productToDelete}`)
-                .expect(405)
+                .expect(204)
 
             const response = await testAPI.get('/products')
             const productsAfterDeletion = Object.values(response.body)
@@ -163,6 +163,16 @@ describe('Testing the API', () => {
 
             const productNames = productsAfterDeletion.map(product => product.name)
             expect(productNames).not.toContain(productToDelete.name)
+        })
+
+        test('Failure when deleting a non existing product', async () => {
+            await testAPI
+                .delete(`/products/-1`)
+                .expect(405)
+
+            const response = await testAPI.get('/products')
+            const productsAfterDeletion = Object.values(response.body)
+            expect(productsAfterDeletion.length).toBe(initialDataSize)
         })
     })
 })
