@@ -53,14 +53,13 @@ router.delete('/:id', async (request, response) => {
     const modifiedProducts = await productsService.deleteProduct(request.params.id)
     const sizeAfter = await productsService.getProductSize()
 
-    console.log("products after deletion: ", modifiedProducts)
     if (sizeAfter !== sizeBefore) return response.status(204).json(modifiedProducts)
     else return response.status(405).send({ error: "Can't perform method" })
+
     /*
     const success = await productsService.deleteProduct(request.params.id)
     if (success) response.status(204).end()
     else response.status(405).send({ error: "Can't perform method" })
-
     */
 })
 
