@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import { Button, Container, TextField } from "@material-ui/core"
+import { Button, Container, TextField, Typography } from "@material-ui/core"
 import PropTypes from "prop-types"
 import productStyles from "./ProductStyles"
 
-const Product = ({ handleAdd }) => {
+const Product = ({ handleAdd, products }) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [quantity, setQuantity] = useState("")
+    const [duplicate, setDuplicate] = useState(false)
     const styles = productStyles()
 
     const handleNameChange = event => setName(event.target.value)
@@ -16,11 +17,20 @@ const Product = ({ handleAdd }) => {
     const addProduct = event => {
         event.preventDefault()
 
-        handleAdd({
-            name: name,
-            description: description,
-            quantity: quantity,
-        })
+
+        if (!products.find(product => product.name === name)) {
+            handleAdd({
+                name: name,
+                description: description,
+                quantity: quantity,
+            })
+        } else {
+            setDuplicate(true)
+            setTimeout(() => {
+                setDuplicate(false)
+            }, 5000)
+        }
+
 
         setName("")
         setDescription("")
@@ -30,6 +40,12 @@ const Product = ({ handleAdd }) => {
     return (
         <Container className={styles.addForm}>
             <form className={styles.form} onSubmit={addProduct}>
+                <Container className={styles.warning}>
+                    <Typography component={"div"} y variant="h6" align="center">
+                        {duplicate ? "Name already exists in the list!" : null}
+                    </Typography>
+                </Container>
+
                 <TextField
                     variant="outlined"
                     margin="normal"

@@ -108,6 +108,10 @@ const productStyles = makeStyles((theme) => ({
             display: "block",
         },
     },
+
+    warning: {
+        color: "#db0000"
+    }
 }))
 
 export default productStyles

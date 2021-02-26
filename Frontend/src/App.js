@@ -16,16 +16,17 @@ const App = () => {
     const [data, setData] = useState({})
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
-    const [empty, setEmpty] = useState()
     const styles = productStyles()
 
     let productKeys = Object.keys(data).filter(key => data[key].name.toLowerCase().includes(search.toLowerCase()))
     let products = Object.values(data).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+    let empty = products.length === 0 ? true : false
 
     useEffect(() => {
         getProducts()
             .then(response => {
-                response.data.length === 0 ? setEmpty(true) : setEmpty(false)
+                console.log("response is: ", response)
+                console.log("response data is: ", response.data)
                 if (response.status !== 304) setData(response.data)
             })
     }, [data])
@@ -35,18 +36,9 @@ const App = () => {
     const handleSearch = event => setSearch(event.target.value)
 
     const handleAdd = newProduct => {
-        const newName = newProduct.name
-        if (!products.find(product => product.name === newName)) {
-            addProduct(newProduct)
-                .then(response => setData(response.data))
-                .catch(e => console.log(e))
-
-        } else {
-            //setMessage("Product name already exists in the list!")
-            //setTimeout(() => {
-            //    setMessage(null)
-            // }, 5000)
-        }
+        addProduct(newProduct)
+            .then(response => setData(response.data))
+            .catch(e => console.log(e))
     }
 
     const handleRemove = (event, id, number) => {
@@ -110,7 +102,7 @@ const App = () => {
                 </Toolbar>
             </AppBar>
 
-            {addClick && <NewProductForm handleAdd={handleAdd} />}
+            {addClick && <NewProductForm handleAdd={handleAdd} products={products} />}
 
             {data &&
                 <ProductList
