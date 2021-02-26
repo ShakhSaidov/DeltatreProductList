@@ -18,7 +18,6 @@ const ProductList = ({ productKeys, products, handleRemove }) => {
                                     key={id}
                                     id={id}
                                     product={products[index]}
-                                    number={index + 1}
                                     handleRemove={handleRemove}
                                 />
                             </Grid>

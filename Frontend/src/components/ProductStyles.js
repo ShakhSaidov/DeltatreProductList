@@ -15,6 +15,9 @@ const productStyles = makeStyles((theme) => ({
 
     menuButton: {
         marginRight: theme.spacing(2),
+        "&:hover": {
+            backgroundColor: fade(theme.palette.common.white, 0.2),
+        },
     },
 
     button: {
@@ -53,7 +56,7 @@ const productStyles = makeStyles((theme) => ({
 
     form: {
         width: "100%",
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(10),
     },
 
     search: {
@@ -70,6 +73,7 @@ const productStyles = makeStyles((theme) => ({
             width: "auto",
         },
     },
+
     searchIcon: {
         padding: theme.spacing(0, 2),
         height: "100%",
@@ -79,13 +83,13 @@ const productStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
+
     inputRoot: {
         color: "inherit",
     },
 
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "100%",

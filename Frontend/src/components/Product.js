@@ -16,19 +16,15 @@ const ProductInfo = ({ info, value }) => {
     )
 }
 
-const Product = ({ id, product, number, handleRemove }) => {
+const Product = ({ id, product, handleRemove }) => {
     const styles = productStyles()
 
     if (product) {
         return (
             <Card elevation={3} className={styles.card}>
                 <CardContent className={styles.cardContent}>
-                    <Typography component={"div"} y variant="h4" align="center"> <b>Product {number}</b> </Typography>
+                    <Typography component={"div"} y variant="h4" align="center"> <b>{product.name}</b> </Typography>
                     <Box p={2}>
-                        <Typography component={"div"} variant="h6">
-                            <ProductInfo info="Name" value={product.name} />
-                        </Typography>
-
                         <Typography component={"div"} variant="h6" paragraph="true">
                             <ProductInfo info="Description" value={product.description} />
                         </Typography>
