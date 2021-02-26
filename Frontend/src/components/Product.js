@@ -1,33 +1,85 @@
 /* eslint-disable linebreak-style */
 import React from "react"
+import { Card, CardContent, CardActions, Box, Button, makeStyles, Typography } from "@material-ui/core"
+
+const productStyles = makeStyles((theme) => ({
+    icon: {
+        marginRight: theme.spacing(2),
+    },
+    heroContent: {
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(8, 0, 6),
+    },
+    heroButtons: {
+        marginTop: theme.spacing(4),
+    },
+    cardGrid: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+    card: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+    },
+    cardActions: {
+        justifyContent: "center"
+    },
+    cardContent: {
+        flexGrow: 1,
+    },
+
+    button: {
+        backgroundColor: "#006aff"
+    }
+}))
 
 const ProductInfo = ({ info, value }) => {
     return (
-        <li className="list-group-item">
+        <div>
             <b>{info}: </b>
             {
                 info === "Description"
                     ? <div className="descriptionBox"> {value} </div>
                     : value
             }
-        </li>
+        </div>
     )
 }
 
 const Product = ({ id, product, number, handleRemove }) => {
+    const styles = productStyles()
+
     if (product) {
         return (
-            <div className="card text-center w-50 p-1 m-5">
-                <div className="card-body">
-                    <h2 className="card-title">Product {number}</h2>
-                    <ul className="center list-group-flush align-items-stretch">
-                        <ProductInfo info="Name" value={product.name} />
-                        <ProductInfo info="Description" value={product.description} />
-                        <ProductInfo info="Qty. Available" value={product.quantity} />
-                    </ul>
-                </div>
-                <button className="btn btn-primary center w-30" value={id} onClick={(event) => handleRemove(event, id)}>Remove</button>
-            </div>
+
+            <Card elevation={3} className={styles.card}>
+                <CardContent className={styles.cardContent}>
+                    <Typography variant="h4" align="center"> <b>Product {number}</b> </Typography>
+
+                    <Box p={4}>
+                        <Typography variant="h6">
+                            <ProductInfo info="Name" value={product.name} />
+                        </Typography>
+
+                        <Typography variant="h6" paragraph={true}>
+                            <ProductInfo info="Description" value={product.description} />
+                        </Typography>
+
+                        <Typography variant="h6">
+                            <ProductInfo info="Qty. Available" value={product.quantity} />
+                        </Typography>
+                    </Box>
+                </CardContent>
+                <CardActions className={styles.cardActions}>
+                    <Button
+                        className={styles.button} variant="contained"
+                        color="primary" value={id}
+                        onClick={(event) => handleRemove(event, id)}>
+                        Remove
+                    </Button>
+                </CardActions>
+            </Card>
         )
     } else return null
 }

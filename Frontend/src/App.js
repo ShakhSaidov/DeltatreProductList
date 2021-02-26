@@ -19,11 +19,8 @@ const App = () => {
     useEffect(() => {
         getProducts()
             .then(response => {
-                response.length === 0 ? setEmpty(true) : setEmpty(false)
-                if (response.status !== 304) {
-                    setData(response.data)
-                    console.log("Data just updated")
-                }
+                response.data.length === 0 ? setEmpty(true) : setEmpty(false)
+                if (response.status !== 304) setData(response.data)
             })
     }, [data])
 
@@ -47,16 +44,9 @@ const App = () => {
     const handleRemove = (event, id, number) => {
         event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
-            console.log("Id to delete is: ", id)
             removeProduct(id)
                 .then(response => {
-                    console.log("Deletion response: ", response)
-                    if (response.status === 204) {
-                        console.log("Data before deletion: ", data)
-                        delete data[id]
-                        setData(data)
-                        console.log("Data after deletion: ", data)
-                    }
+                    if (response.status === 204) setData(data)
                 })
                 .catch(e => console.log(e))
         }
