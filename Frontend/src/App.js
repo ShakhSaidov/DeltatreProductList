@@ -20,7 +20,10 @@ const App = () => {
         getProducts()
             .then(response => {
                 response.length === 0 ? setEmpty(true) : setEmpty(false)
-                if(response.status !== 304) setData(response.data)
+                if (response.status !== 304) {
+                    setData(response.data)
+                    console.log("Data just updated")
+                }
             })
     }, [data])
 
@@ -42,9 +45,9 @@ const App = () => {
     }
 
     const handleRemove = (event, id, number) => {
-        console.log("Id to delete is: ", id)
         event.preventDefault() //remove confirm, too extra
         if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
+            console.log("Id to delete is: ", id)
             removeProduct(id)
                 .then(response => {
                     console.log("Deletion response: ", response)
