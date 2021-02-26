@@ -16,25 +16,22 @@ const Product = ({ handleAdd, products }) => {
 
     const addProduct = event => {
         event.preventDefault()
-
-
-        if (!products.find(product => product.name === name)) {
+        if (!products.find(product => product.name.toLowerCase() === name.toLowerCase())) {
             handleAdd({
                 name: name,
                 description: description,
                 quantity: quantity,
             })
+
+            setName("")
+            setDescription("")
+            setQuantity("")
         } else {
             setDuplicate(true)
             setTimeout(() => {
                 setDuplicate(false)
             }, 5000)
         }
-
-
-        setName("")
-        setDescription("")
-        setQuantity("")
     }
 
     return (

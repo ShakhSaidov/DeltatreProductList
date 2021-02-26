@@ -25,8 +25,6 @@ const App = () => {
     useEffect(() => {
         getProducts()
             .then(response => {
-                console.log("response is: ", response)
-                console.log("response data is: ", response.data)
                 if (response.status !== 304) setData(response.data)
             })
     }, [data])
@@ -41,15 +39,14 @@ const App = () => {
             .catch(e => console.log(e))
     }
 
-    const handleRemove = (event, id, number) => {
+    const handleRemove = (event, id) => {
         event.preventDefault()
-        if (window.confirm(`Are you sure you want to remove Product ${number}?`)) {
-            removeProduct(id)
-                .then(response => {
-                    if (response.status === 204) setData(data)
-                })
-                .catch(e => console.log(e))
-        }
+        removeProduct(id)
+            .then(response => {
+                if (response.status === 204) setData(data)
+            })
+            .catch(e => console.log(e))
+
     }
 
     return (

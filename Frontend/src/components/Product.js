@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React from "react"
+import React, { useState } from "react"
 import productStyles from "./ProductStyles"
 import { Card, CardContent, CardActions, Box, Button, Typography } from "@material-ui/core"
 
@@ -17,7 +17,15 @@ const ProductInfo = ({ info, value }) => {
 }
 
 const Product = ({ id, product, handleRemove }) => {
+    const [warnRemoval, setWarnRemoval] = useState(false)
     const styles = productStyles()
+
+    const confirmRemove = () => {
+        setWarnRemoval(true)
+        setTimeout(() => {
+            setWarnRemoval(false)
+        }, 5000)
+    }
 
     if (product) {
         return (
@@ -35,11 +43,20 @@ const Product = ({ id, product, handleRemove }) => {
                     </Box>
                 </CardContent>
 
+                <CardContent className={styles.warning}>
+                    <Typography component={"div"} y variant="h6" align="center">
+                        {warnRemoval ? "Are you sure?" : null}
+                    </Typography>
+                </CardContent>
+
                 <CardActions className={styles.cardActions}>
                     <Button
                         className={styles.button} variant="contained"
                         color="primary" value={id}
-                        onClick={(event) => handleRemove(event, id)}>
+                        onClick={(event) => {
+                            if (!warnRemoval) confirmRemove()
+                            else handleRemove(event, id)
+                        }}>
                         Remove
                     </Button>
                 </CardActions>
