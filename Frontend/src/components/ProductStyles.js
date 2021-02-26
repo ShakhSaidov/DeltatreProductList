@@ -1,6 +1,6 @@
-import { fade, makeStyles } from "@material-ui/core"
+import { fade, makeStyles } from "@material-ui/core/styles"
 
-const productStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     appBar: {
         backgroundColor: "#002c73",
         position: "fixed",
@@ -114,4 +114,4 @@ const productStyles = makeStyles((theme) => ({
     }
 }))
 
-export default productStyles
+export default useStyles

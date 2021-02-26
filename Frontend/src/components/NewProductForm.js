@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { Button, Container, TextField, Typography } from "@material-ui/core"
 import PropTypes from "prop-types"
-import productStyles from "./ProductStyles"
+import useStyles from "./ProductStyles"
 
 const Product = ({ handleAdd, products }) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [quantity, setQuantity] = useState("")
     const [duplicate, setDuplicate] = useState(false)
-    const styles = productStyles()
+    const styles = useStyles()
 
     const handleNameChange = event => setName(event.target.value)
     const handleDescriptionChange = event => setDescription(event.target.value)

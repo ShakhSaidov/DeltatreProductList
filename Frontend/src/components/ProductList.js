@@ -2,10 +2,10 @@
 import { Container, Grid } from "@material-ui/core"
 import React from "react"
 import Product from "./Product"
-import productStyles from "./ProductStyles"
+import useStyles from "./ProductStyles"
 
 const ProductList = ({ productKeys, products, handleRemove }) => {
-    const styles = productStyles()
+    const styles = useStyles()
 
     if (products && productKeys) {
         return (

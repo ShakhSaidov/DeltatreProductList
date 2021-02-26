@@ -79,7 +79,7 @@ const App = () => {
                         </Typography>
                         :
                         <Typography className={styles.title} component={"div"} variant="h5" noWrap>
-                            <b> Product List empty! Maybe add some? </b>
+                            <b> Nothing Found! Maybe add some? </b>
                         </Typography>
                     }
 
