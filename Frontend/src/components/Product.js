@@ -1,38 +1,7 @@
 /* eslint-disable linebreak-style */
 import React from "react"
-import { Card, CardContent, CardActions, Box, Button, makeStyles, Typography } from "@material-ui/core"
-
-const productStyles = makeStyles((theme) => ({
-    icon: {
-        marginRight: theme.spacing(2),
-    },
-    heroContent: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(8, 0, 6),
-    },
-    heroButtons: {
-        marginTop: theme.spacing(4),
-    },
-    cardGrid: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-    card: {
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-    },
-    cardActions: {
-        justifyContent: "center"
-    },
-    cardContent: {
-        flexGrow: 1,
-    },
-
-    button: {
-        backgroundColor: "#006aff"
-    }
-}))
+import productStyles from "./ProductStyles"
+import { Card, CardContent, CardActions, Box, Button, Typography } from "@material-ui/core"
 
 const ProductInfo = ({ info, value }) => {
     return (
@@ -52,12 +21,10 @@ const Product = ({ id, product, number, handleRemove }) => {
 
     if (product) {
         return (
-
             <Card elevation={3} className={styles.card}>
                 <CardContent className={styles.cardContent}>
                     <Typography variant="h4" align="center"> <b>Product {number}</b> </Typography>
-
-                    <Box p={4}>
+                    <Box p={2}>
                         <Typography variant="h6">
                             <ProductInfo info="Name" value={product.name} />
                         </Typography>
@@ -71,6 +38,7 @@ const Product = ({ id, product, number, handleRemove }) => {
                         </Typography>
                     </Box>
                 </CardContent>
+
                 <CardActions className={styles.cardActions}>
                     <Button
                         className={styles.button} variant="contained"
