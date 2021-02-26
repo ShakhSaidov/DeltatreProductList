@@ -1,9 +1,13 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useImperativeHandle } from "react"
 import PropTypes from "prop-types"
+import productStyles from "./ProductStyles"
+import { Button, CardActions, IconButton } from "@material-ui/core"
+import AddIcon from "@material-ui/icons/Add"
 
 const Switch = React.forwardRef((props, ref) => {
     const [visibility, setVisibility] = useState(false)
+    const styles = productStyles()
 
     const hide = { display: visibility ? "none" : "" }
     const show = { display: visibility ? "" : "none" }
@@ -19,13 +23,28 @@ const Switch = React.forwardRef((props, ref) => {
     })
 
     return (
-        <div className="container h-100">
-            <div className="form-group center" style={hide}>
-                <button className="btn btn-primary" onClick={switchButton}>{props.buttonLabel}</button>
+        <div>
+            <div style={hide}>
+                <IconButton
+                    edge="start"
+                    className={styles.menuButton}
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={switchButton}
+                >
+                    <AddIcon/>
+                </IconButton>
             </div>
-            <div className="form-group center" style={show}>
+            <div style={show}>
                 {props.children}
-                <button className="btn btn-primary" onClick={switchButton}>cancel</button>
+                <CardActions className={styles.cardActions}>
+                    <Button
+                        className={styles.button} variant="contained"
+                        color="primary"
+                        onClick={switchButton}>
+                        cancel
+                    </Button>
+                </CardActions>
             </div>
         </div>
 
@@ -40,3 +59,14 @@ Switch.propTypes = {
 }
 
 export default Switch
+
+/*
+<CardActions className={styles.cardActions}>
+                    <Button
+                        className={styles.button} variant="contained"
+                        color="primary"
+                        onClick={switchButton}>
+                        {props.buttonLabel}
+                    </Button>
+                </CardActions>
+*/

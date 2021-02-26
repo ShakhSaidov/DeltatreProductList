@@ -23,17 +23,17 @@ const Product = ({ id, product, number, handleRemove }) => {
         return (
             <Card elevation={3} className={styles.card}>
                 <CardContent className={styles.cardContent}>
-                    <Typography variant="h4" align="center"> <b>Product {number}</b> </Typography>
+                    <Typography component={"div"} y variant="h4" align="center"> <b>Product {number}</b> </Typography>
                     <Box p={2}>
-                        <Typography variant="h6">
+                        <Typography component={"div"} variant="h6">
                             <ProductInfo info="Name" value={product.name} />
                         </Typography>
 
-                        <Typography variant="h6" paragraph={true}>
+                        <Typography component={"div"} variant="h6" paragraph="true">
                             <ProductInfo info="Description" value={product.description} />
                         </Typography>
 
-                        <Typography variant="h6">
+                        <Typography component={"div"} variant="h6">
                             <ProductInfo info="Qty. Available" value={product.quantity} />
                         </Typography>
                     </Box>

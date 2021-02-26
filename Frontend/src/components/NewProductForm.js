@@ -1,11 +1,13 @@
 import React, { useState } from "react"
-import { Paper } from "@material-ui/core"
+import { Button, Container, TextField } from "@material-ui/core"
 import PropTypes from "prop-types"
+import productStyles from "./ProductStyles"
 
 const Product = ({ handleAdd }) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [quantity, setQuantity] = useState("")
+    const styles = productStyles()
 
     const handleNameChange = event => setName(event.target.value)
     const handleDescriptionChange = event => setDescription(event.target.value)
@@ -26,29 +28,71 @@ const Product = ({ handleAdd }) => {
     }
 
     return (
-        <div className="row h-100 justify-content-center align-items-center">
-            <div className="col-10 col-md-8 col-lg-6">
-                <form className="form-example" onSubmit={addProduct}>
-                    <Paper style={{ padding: 24 }}>
-                        <div className="form-group">
-                            <label>Name: </label>
-                            <input className="form-control" required type="text" name="name" value={name} onChange={handleNameChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Description: </label>
-                            <textarea className="form-control" required type="text" rows="3" name="description" value={description} onChange={handleDescriptionChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Qty. Available: </label>
-                            <input className="form-control" required type="number" min="0" name="quantity" value={quantity} onChange={handleQuantityChange} />
-                        </div>
-                        <div className="form-group center">
-                            <input className="btn btn-primary" type="submit" />
-                        </div>
-                    </Paper>
-                </form>
-            </div>
-        </div>
+        <Container className={styles.addForm}>
+            <form className={styles.form} onSubmit={addProduct}>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    autoFocus
+                    value={name}
+                    onChange={handleNameChange}
+                />
+
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="description"
+                    label="Description"
+                    name="description"
+                    type="text"
+                    multiline
+                    rows={2}
+                    rowsMax={4}
+                    autoComplete="Description"
+                    autoFocus
+                    value={description}
+                    onChange={handleDescriptionChange}
+                />
+
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="quantity"
+                    label="Quantity"
+                    name="quantity"
+                    type="number"
+                    InputProps={{
+                        inputProps: {
+                            min: 0
+                        }
+                    }}
+                    autoComplete="name"
+                    autoFocus
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                />
+
+                <Button
+                    className={styles.button}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth>
+                    Add Product
+                </Button>
+            </form>
+        </Container>
     )
 }
 

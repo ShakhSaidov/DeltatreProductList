@@ -23,7 +23,6 @@ const ProductList = ({ productKeys, products, handleRemove }) => {
                                 />
                             </Grid>
                         )
-
                     })}
                 </Grid>
             </Container>
