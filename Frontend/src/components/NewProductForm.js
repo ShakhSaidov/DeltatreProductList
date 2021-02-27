@@ -1,7 +1,36 @@
 import React, { useState } from "react"
 import { Button, Container, TextField, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
 import PropTypes from "prop-types"
-import useStyles from "./ProductStyles"
+//import useStyles from "./ProductStyles"
+
+const useStyles = makeStyles((theme) => ({
+    addForm: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "50%"
+    },
+
+    button: {
+        marginBottom: theme.spacing(2),
+        backgroundColor: "#006fff",
+
+        "&:hover": {
+            backgroundColor: "#1990ff",
+            boxShadow: "0px 0px 4px 1px grey"
+        }
+    },
+
+    form: {
+        width: "100%",
+        marginTop: theme.spacing(10),
+    },
+
+    warning: {
+        color: "#db0000"
+    }
+}))
 
 const Product = ({ handleAdd, products }) => {
     const [name, setName] = useState("")

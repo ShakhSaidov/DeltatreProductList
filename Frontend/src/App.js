@@ -3,20 +3,88 @@ import React, { useState, useEffect } from "react"
 import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
-//import Message from "./components/Message"
-//import Switch from "./components/Switch"
 import "./App.css"
-import productStyles from "./components/ProductStyles"
+//import useStyles from "./components/ProductStyles"
 import { AppBar, Toolbar, Typography, InputBase, IconButton } from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
+import { fade, makeStyles } from "@material-ui/core/styles"
+
+const useStyles = makeStyles((theme) => ({
+    appBar: {
+        backgroundColor: "#002c73",
+        position: "fixed",
+    },
+
+    menuButton: {
+        marginRight: theme.spacing(2),
+        "&:hover": {
+            backgroundColor: fade(theme.palette.common.white, 0.2),
+        },
+    },
+
+    cardContent: {
+        flexGrow: 1,
+    },
+
+
+    search: {
+        position: "relative",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        "&:hover": {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginLeft: 0,
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+            marginLeft: theme.spacing(1),
+            width: "auto",
+        },
+    },
+
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: "100%",
+        position: "absolute",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    inputRoot: {
+        color: "inherit",
+    },
+
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+            width: "12ch",
+            "&:focus": {
+                width: "20ch",
+            },
+        },
+    },
+
+    title: {
+        flexGrow: 1,
+        display: "none",
+        [theme.breakpoints.up("sm")]: {
+            display: "block",
+        },
+    }
+}))
 
 const App = () => {
     const [data, setData] = useState({})
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
-    const styles = productStyles()
+    const styles = useStyles()
 
     let productKeys = Object.keys(data).filter(key => data[key].name.toLowerCase().includes(search.toLowerCase()))
     let products = Object.values(data).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))

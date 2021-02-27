@@ -1,8 +1,16 @@
 /* eslint-disable linebreak-style */
 import { Container, Grid } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
 import React from "react"
 import Product from "./Product"
-import useStyles from "./ProductStyles"
+//import useStyles from "./ProductStyles"
+
+const useStyles = makeStyles((theme) => ({
+    cardGrid: {
+        paddingTop: theme.spacing(10),
+        paddingBottom: theme.spacing(2),
+    }
+}))
 
 const ProductList = ({ productKeys, products, handleRemove }) => {
     const styles = useStyles()

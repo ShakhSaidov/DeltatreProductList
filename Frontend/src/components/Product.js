@@ -1,7 +1,39 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from "react"
-import productStyles from "./ProductStyles"
+//import useStyles from "./ProductStyles"
 import { Card, CardContent, CardActions, Box, Button, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        marginBottom: theme.spacing(2),
+        backgroundColor: "#006fff",
+
+        "&:hover": {
+            backgroundColor: "#1990ff",
+            boxShadow: "0px 0px 4px 1px grey"
+        }
+    },
+
+    card: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+    },
+
+    cardActions: {
+        justifyContent: "center",
+        alignContent: "center"
+    },
+
+    cardContent: {
+        flexGrow: 1,
+    },
+
+    warning: {
+        color: "#db0000"
+    }
+}))
 
 const ProductInfo = ({ info, value }) => {
     return (
@@ -18,7 +50,7 @@ const ProductInfo = ({ info, value }) => {
 
 const Product = ({ id, product, handleRemove }) => {
     const [warnRemoval, setWarnRemoval] = useState(false)
-    const styles = productStyles()
+    const styles = useStyles()
 
     const confirmRemove = () => {
         setWarnRemoval(true)
