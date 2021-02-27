@@ -3,7 +3,6 @@ import { Container, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import React from "react"
 import Product from "./Product"
-//import useStyles from "./ProductStyles"
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {

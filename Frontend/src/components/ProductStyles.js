@@ -13,13 +13,6 @@ const useStyles = makeStyles((theme) => ({
         width: "50%"
     },
 
-    menuButton: {
-        marginRight: theme.spacing(2),
-        "&:hover": {
-            backgroundColor: fade(theme.palette.common.white, 0.2),
-        },
-    },
-
     button: {
         marginBottom: theme.spacing(2),
         backgroundColor: "#006fff",
@@ -59,6 +52,30 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(10),
     },
 
+    inputRoot: {
+        color: "inherit",
+    },
+
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+            width: "12ch",
+            "&:focus": {
+                width: "20ch",
+            },
+        },
+    },
+
+    addButton: {
+        marginRight: theme.spacing(2),
+        "&:hover": {
+            backgroundColor: fade(theme.palette.common.white, 0.2),
+        },
+    },
+
     search: {
         position: "relative",
         borderRadius: theme.shape.borderRadius,
@@ -84,22 +101,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
     },
 
-    inputRoot: {
-        color: "inherit",
-    },
 
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            width: "12ch",
-            "&:focus": {
-                width: "20ch",
-            },
-        },
-    },
 
     title: {
         flexGrow: 1,

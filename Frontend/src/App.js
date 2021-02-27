@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react"
 import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
-import "./App.css"
-//import useStyles from "./components/ProductStyles"
-import { AppBar, Toolbar, Typography, InputBase, IconButton } from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
+import { AppBar, Toolbar, Typography, InputBase, IconButton } from "@material-ui/core"
 import { fade, makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme) => ({

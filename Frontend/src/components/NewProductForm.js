@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { Button, Container, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import PropTypes from "prop-types"
-//import useStyles from "./ProductStyles"
 
 const useStyles = makeStyles((theme) => ({
     addForm: {

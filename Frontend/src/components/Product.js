@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from "react"
-//import useStyles from "./ProductStyles"
 import { Card, CardContent, CardActions, Box, Button, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -39,10 +38,9 @@ const ProductInfo = ({ info, value }) => {
     return (
         <div>
             <b>{info}: </b>
-            {
-                info === "Description"
-                    ? <div className="descriptionBox"> {value} </div>
-                    : value
+            {   info === "Description"
+                ? <div className="descriptionBox"> {value} </div>
+                : value
             }
         </div>
     )
