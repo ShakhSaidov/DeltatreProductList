@@ -12,14 +12,11 @@ router.get('/', async (request, response) => {
     /*
     newEtag = request.header('if-none-match')
     console.log("If-none-match: ", newEtag)
-
     if (newEtag !== undefined && newEtag === etag) return response.status(304)
-
     else {
         const products = await productsService.getProducts()
         response.set('Cache-Control', 'no-cache')
         response.json(products)
-
         etag = response.getHeader('Etag')
         console.log("Etag: ", etag)
     }
