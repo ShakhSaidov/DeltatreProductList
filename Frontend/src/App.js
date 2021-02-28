@@ -92,15 +92,20 @@ const App = () => {
 
     useEffect(() => {
         const getData = async () => {
-            console.log("Entered useEffect")
-            const response = await getProducts(etag)
-            console.log("getProducts response: ", response)
-            if (response !== undefined && response.status !== 304) {
-                console.log("Setting Etag to: ", response.headers["etag"])
-                setEtag(response.headers["etag"])
-                console.log("Setting Data to: ", response.data)
-                setData(response.data)
-            } else setData(...data)
+            try {
+                console.log("Entered useEffect")
+                const response = await getProducts(etag)
+                console.log("getProducts response: ", response)
+
+                if (response !== undefined && response.status !== 304) {
+                    console.log("Setting Etag to: ", response.headers["etag"])
+                    setEtag(response.headers["etag"])
+                    console.log("Setting Data to: ", response.data)
+                    setData(response.data)
+                }
+            } catch (error) {
+                console.log(error)
+            }
             //setUpdate(false)
         }
 
@@ -126,7 +131,10 @@ const App = () => {
         event.preventDefault()
         removeProduct(id)
             .then(response => {
-                console.log("Response after addition ", response)
+                console.log("Response after remove ", response)
+                setEtag(response.headers["etag"])
+                setData(data)
+                //setUpdate(true)
             })
             .catch(e => console.log(e))
     }

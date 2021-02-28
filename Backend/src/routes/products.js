@@ -11,36 +11,35 @@ router.get('/', async (request, response) => {
     console.log("If-none-match: ", newEtag)
 
     if (newEtag !== undefined && newEtag === etag) {
-        console.log("No Change. Sending 304 status")
-        response.status(304)
-        return
+        response.sendStatus(304)
+        console.log("No Change. Sending 304 status: ", response.statusCode, response.statusMessage)
+    } else {
+        const products = await productsService.getProducts()
+        console.log("Retrieved products, length is", Object.keys(products).length)
+        response.set('Cache-Control', 'private', 'maxAge=300')
+        response.json(products)
+        console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
+        etag = response.getHeader('Etag')
+        console.log("New etag: ", etag)
+        console.log("------------------------------")
+        console.log("------------------------------")
+        console.log("------------------------------")
     }
-
-    const products = await productsService.getProducts()
-    console.log("Retrieved products, length is", Object.keys(products).length)
-    response.set('Cache-Control', 'private', 'maxAge=300')
-    response.json(products)
-    console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
-    etag = response.getHeader('Etag')
-    console.log("New etag: ", etag)
-    console.log("------------------------------")
-    console.log("------------------------------")
-    console.log("------------------------------")
 })
 
 //GET request for a specific product
 router.get('/:id', async (request, response) => {
     const product = await productsService.findProduct(request.params.id)
-    if (product) return response.json(product)
+    if (product) response.json(product)
 
-    return response.status(404).send({ error: "invalid id" })
+    response.status(404).send({ error: "invalid id" })
 })
 
 //POST request to add a new product onto the product list
 router.post('/', async (request, response) => {
     const { error } = await productsService.validateProduct(request.body)
     if (error) {
-        return response.status(422).send({
+        response.status(422).send({
             error: error.details.map(detail => detail.message)
         })
     }
@@ -51,18 +50,10 @@ router.post('/', async (request, response) => {
 
 //DELETE request to remove a product form product list
 router.delete('/:id', async (request, response) => {
-    const sizeBefore = await productsService.getProductSize()
-    const modifiedProducts = await productsService.deleteProduct(request.params.id)
-    const sizeAfter = await productsService.getProductSize()
-
-    if (sizeAfter !== sizeBefore) return response.status(204).json(modifiedProducts)
-    else return response.status(405).send({ error: "Can't perform method" })
-
-    /*
     const success = await productsService.deleteProduct(request.params.id)
-    if (success) response.status(204).end()
+    if (success) response.sendStatus(204)
+
     else response.status(405).send({ error: "Can't perform method" })
-    */
 })
 
 module.exports = router

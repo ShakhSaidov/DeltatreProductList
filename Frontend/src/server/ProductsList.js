@@ -1,6 +1,10 @@
 import axios from "axios"
 const rootUrl = "/products"
 
+axios.defaults.validateStatus = () => {
+    return status < 400
+}
+
 //make one liner and change name
 const getProducts = etag =>
     axios
