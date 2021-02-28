@@ -2,25 +2,30 @@ const express = require('express')
 const productsService = require('../services/productsService')
 
 const router = express.Router()
-//let etag, newEtag
+let etag
 
 //GET request for all products from product list
 router.get('/', async (request, response) => {
-    const products = await productsService.getProducts()
-    response.json(products)
-
-    /*
-    newEtag = request.header('if-none-match')
+    const newEtag = request.headers['if-none-match']
+    console.log("Previous etag: ", etag)
     console.log("If-none-match: ", newEtag)
-    if (newEtag !== undefined && newEtag === etag) return response.status(304)
-    else {
-        const products = await productsService.getProducts()
-        response.set('Cache-Control', 'no-cache')
-        response.json(products)
-        etag = response.getHeader('Etag')
-        console.log("Etag: ", etag)
+
+    if (newEtag !== undefined && newEtag === etag) {
+        console.log("No Change. Sending 304 status")
+        response.status(304)
+        return
     }
-    */
+
+    const products = await productsService.getProducts()
+    console.log("Retrieved products, length is", Object.keys(products).length)
+    response.set('Cache-Control', 'private', 'maxAge=300')
+    response.json(products)
+    console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
+    etag = response.getHeader('Etag')
+    console.log("New etag: ", etag)
+    console.log("------------------------------")
+    console.log("------------------------------")
+    console.log("------------------------------")
 })
 
 //GET request for a specific product

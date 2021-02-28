@@ -80,6 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
     const [data, setData] = useState({})
+    const [etag, setEtag] = useState()
+    //const [update, setUpdate] = useState(false)
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
     const styles = useStyles()
@@ -89,11 +91,21 @@ const App = () => {
     let empty = products.length === 0 ? true : false
 
     useEffect(() => {
-        getProducts()
-            .then(response => {
-                if (response.status !== 304) setData(response.data)
-            })
-    }, [data])
+        const getData = async () => {
+            console.log("Entered useEffect")
+            const response = await getProducts(etag)
+            console.log("getProducts response: ", response)
+            if (response !== undefined && response.status !== 304) {
+                console.log("Setting Etag to: ", response.headers["etag"])
+                setEtag(response.headers["etag"])
+                console.log("Setting Data to: ", response.data)
+                setData(response.data)
+            } else setData(...data)
+            //setUpdate(false)
+        }
+
+        getData()
+    }, [etag])
 
     const handleAddClick = clicked => setAddClick(clicked)
 
@@ -101,7 +113,12 @@ const App = () => {
 
     const handleAdd = newProduct => {
         addProduct(newProduct)
-            .then(response => setData(response.data))
+            .then(response => {
+                console.log("Response after addition ", response)
+                setEtag(response.headers["etag"])
+                setData(response.data)
+                //setUpdate(true)
+            })
             .catch(e => console.log(e))
     }
 
@@ -109,10 +126,9 @@ const App = () => {
         event.preventDefault()
         removeProduct(id)
             .then(response => {
-                if (response.status === 204) setData(data)
+                console.log("Response after addition ", response)
             })
             .catch(e => console.log(e))
-
     }
 
     return (
