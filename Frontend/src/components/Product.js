@@ -85,7 +85,10 @@ const Product = ({ id, product, handleRemove }) => {
                         color="primary" value={id}
                         onClick={(event) => {
                             if (!warnRemoval) confirmRemove()
-                            else handleRemove(event, id)
+                            else {
+                                handleRemove(event, id)
+                                setWarnRemoval(false)
+                            }
                         }}>
                         Remove
                     </Button>

@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
     const [data, setData] = useState({})
     const [etag, setEtag] = useState()
-    //const [update, setUpdate] = useState(false)
+    const [update, setUpdate] = useState(false)
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
     const styles = useStyles()
@@ -91,26 +91,27 @@ const App = () => {
     let empty = products.length === 0 ? true : false
 
     useEffect(() => {
+        let mounted = true
         const getData = async () => {
             try {
                 console.log("Entered useEffect")
                 const response = await getProducts(etag)
                 console.log("getProducts response: ", response)
 
-                if (response !== undefined && response.status !== 304) {
+                if (mounted && response !== undefined && response.status !== 304) {
                     console.log("Setting Etag to: ", response.headers["etag"])
                     setEtag(response.headers["etag"])
                     console.log("Setting Data to: ", response.data)
                     setData(response.data)
                 }
-            } catch (error) {
-                console.log(error)
-            }
-            //setUpdate(false)
+            } catch (error) { console.log(error) }
+
+            setUpdate(false)
         }
 
         getData()
-    }, [etag])
+        return () => { mounted = false }
+    }, [update])
 
     const handleAddClick = clicked => setAddClick(clicked)
 
@@ -121,8 +122,8 @@ const App = () => {
             .then(response => {
                 console.log("Response after addition ", response)
                 setEtag(response.headers["etag"])
-                setData(response.data)
-                //setUpdate(true)
+                setData(data)
+                setUpdate(true)
             })
             .catch(e => console.log(e))
     }
@@ -134,7 +135,7 @@ const App = () => {
                 console.log("Response after remove ", response)
                 setEtag(response.headers["etag"])
                 setData(data)
-                //setUpdate(true)
+                setUpdate(true)
             })
             .catch(e => console.log(e))
     }
