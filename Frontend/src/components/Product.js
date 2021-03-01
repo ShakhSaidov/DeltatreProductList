@@ -63,7 +63,7 @@ const Product = ({ id, product, handleRemove }) => {
                 <CardContent className={styles.cardContent}>
                     <Typography component={"div"} y variant="h4" align="center"> <b>{product.name}</b> </Typography>
                     <Box p={2}>
-                        <Typography component={"div"} variant="h6" paragraph="true">
+                        <Typography component={"div"} variant="h6" paragraph={true}>
                             <ProductInfo info="Description" value={product.description} />
                         </Typography>
 

@@ -82,11 +82,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    //const [data, setData] = useState({})
     const [data, setData] = useProductsState({})
-    const [etag, setEtag] = useState()
-    //const [update, setUpdate] = useState(false)
-    const [addClick, setAddClick] = useState()
+    const [etag, setEtag] = useState("")
+    const [addClick, setAddClick] = useState(false)
     const [search, setSearch] = useState("")
     const styles = useStyles()
 
@@ -102,10 +100,10 @@ const App = () => {
                 console.log("getProducts response: ", response)
 
                 if (response !== undefined && response.status !== 304) {
-                    console.log("Setting Etag to: ", response.headers["etag"])
-                    setEtag(response.headers["etag"])
                     console.log("Setting Data to: ", response.data)
                     setData(response.data)
+                    console.log("Setting Etag to: ", response.headers["etag"])
+                    setEtag(response.headers["etag"])
                 }
             } catch (error) { console.log(error) }
         }
@@ -123,7 +121,6 @@ const App = () => {
                 console.log("Response after addition ", response)
                 setData(data)
                 setEtag(response.headers["etag"])
-                //setUpdate(true)
             })
             .catch(e => console.log(e))
     }
@@ -135,7 +132,6 @@ const App = () => {
                 console.log("Response after remove ", response)
                 setData(data)
                 setEtag(response.headers["etag"])
-                //setUpdate(true)
             })
             .catch(e => console.log(e))
     }
