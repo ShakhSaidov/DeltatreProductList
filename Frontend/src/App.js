@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react"
+import createPersistedState from "use-persisted-state"
 import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
@@ -8,6 +9,8 @@ import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
 import { AppBar, Toolbar, Typography, InputBase, IconButton } from "@material-ui/core"
 import { fade, makeStyles } from "@material-ui/core/styles"
+
+const useProductsState = createPersistedState("products")
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -79,9 +82,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    const [data, setData] = useState({})
+    //const [data, setData] = useState({})
+    const [data, setData] = useProductsState({})
     const [etag, setEtag] = useState()
-    const [update, setUpdate] = useState(false)
+    //const [update, setUpdate] = useState(false)
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
     const styles = useStyles()
@@ -91,27 +95,23 @@ const App = () => {
     let empty = products.length === 0 ? true : false
 
     useEffect(() => {
-        let mounted = true
         const getData = async () => {
             try {
                 console.log("Entered useEffect")
                 const response = await getProducts(etag)
                 console.log("getProducts response: ", response)
 
-                if (mounted && response !== undefined && response.status !== 304) {
+                if (response !== undefined && response.status !== 304) {
                     console.log("Setting Etag to: ", response.headers["etag"])
                     setEtag(response.headers["etag"])
                     console.log("Setting Data to: ", response.data)
                     setData(response.data)
                 }
             } catch (error) { console.log(error) }
-
-            setUpdate(false)
         }
 
         getData()
-        return () => { mounted = false }
-    }, [update])
+    }, [etag])
 
     const handleAddClick = clicked => setAddClick(clicked)
 
@@ -121,9 +121,9 @@ const App = () => {
         addProduct(newProduct)
             .then(response => {
                 console.log("Response after addition ", response)
-                setEtag(response.headers["etag"])
                 setData(data)
-                setUpdate(true)
+                setEtag(response.headers["etag"])
+                //setUpdate(true)
             })
             .catch(e => console.log(e))
     }
@@ -133,9 +133,9 @@ const App = () => {
         removeProduct(id)
             .then(response => {
                 console.log("Response after remove ", response)
-                setEtag(response.headers["etag"])
                 setData(data)
-                setUpdate(true)
+                setEtag(response.headers["etag"])
+                //setUpdate(true)
             })
             .catch(e => console.log(e))
     }
