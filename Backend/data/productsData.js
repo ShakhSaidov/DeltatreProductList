@@ -1,4 +1,3 @@
-
 const products = {
     "w11H5lBZ2UPC5P6Hi9Rz1": {
         name: "Telequiet",

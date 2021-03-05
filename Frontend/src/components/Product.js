@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { Card, CardContent, CardActions, Box, Button, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
+//Custom styles to display the product
 const useStyles = makeStyles((theme) => ({
     button: {
         marginBottom: theme.spacing(2),
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+//Component that displays product info (name, description, quantity)
 const ProductInfo = ({ info, value }) => {
     return (
         <div>
@@ -46,10 +48,12 @@ const ProductInfo = ({ info, value }) => {
     )
 }
 
+//Component that displays the whole product
 const Product = ({ id, product, handleRemove }) => {
-    const [warnRemoval, setWarnRemoval] = useState(false)
+    const [warnRemoval, setWarnRemoval] = useState(false)           //shows a warning when a user tries to remove a product
     const styles = useStyles()
 
+    //A temporary warning sign will be shown for 5 seconds when a user tries to remove a product
     const confirmRemove = () => {
         setWarnRemoval(true)
         setTimeout(() => {
@@ -61,7 +65,7 @@ const Product = ({ id, product, handleRemove }) => {
         return (
             <Card elevation={3} className={styles.card}>
                 <CardContent className={styles.cardContent}>
-                    <Typography component={"div"} y variant="h4" align="center"> <b>{product.name}</b> </Typography>
+                    <Typography component={"div"} variant="h4" align="center"> <b>{product.name}</b> </Typography>
                     <Box p={2}>
                         <Typography component={"div"} variant="h6" paragraph={true}>
                             <ProductInfo info="Description" value={product.description} />
@@ -74,7 +78,7 @@ const Product = ({ id, product, handleRemove }) => {
                 </CardContent>
 
                 <CardContent className={styles.warning}>
-                    <Typography component={"div"} y variant="h6" align="center">
+                    <Typography component={"div"} variant="h6" align="center">
                         {warnRemoval ? "Are you sure?" : null}
                     </Typography>
                 </CardContent>

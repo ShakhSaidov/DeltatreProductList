@@ -16,7 +16,6 @@ router.get('/', async (request, response) => {
     } else {
         const products = await productsService.getProducts()
         console.log("Retrieved products, length is", Object.keys(products).length)
-        response.set('Cache-Control', 'private', 'maxAge=300')
         response.json(products)
         console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
         etag = response.getHeader('Etag')
@@ -32,7 +31,7 @@ router.get('/:id', async (request, response) => {
     const product = await productsService.findProduct(request.params.id)
     if (product) response.json(product)
 
-    response.status(404).send({ error: "invalid id" })
+    else response.status(404).send({ error: "invalid id" })
 })
 
 //POST request to add a new product onto the product list
@@ -42,10 +41,10 @@ router.post('/', async (request, response) => {
         response.status(422).send({
             error: error.details.map(detail => detail.message)
         })
+    } else {
+        const newProducts = await productsService.addProduct(request.body)
+        response.json(newProducts)
     }
-
-    const newProducts = await productsService.addProduct(request.body)
-    response.json(newProducts)
 })
 
 //DELETE request to remove a product form product list

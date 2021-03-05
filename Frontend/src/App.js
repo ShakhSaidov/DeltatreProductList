@@ -10,8 +10,10 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import { AppBar, Toolbar, Typography, InputBase, IconButton, CircularProgress } from "@material-ui/core"
 import { fade, makeStyles } from "@material-ui/core/styles"
 
+//Hook that handles a state across multiple tabs
 const useProductsState = createPersistedState("products")
 
+//Custom styling for the entire page
 const useStyles = makeStyles((theme) => ({
     appBar: {
         backgroundColor: "#002c73",
@@ -100,6 +102,7 @@ const App = () => {
     let productKeys = Object.keys(data).filter(key => data[key].name.toLowerCase().includes(search.toLowerCase()))
     let products = Object.values(data).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
 
+    //renders the page whenever etag changes
     useEffect(() => {
         const getData = async () => {
             try {
@@ -126,6 +129,7 @@ const App = () => {
 
     const handleSearch = event => setSearch(event.target.value)
 
+    //requests to add a new product onto the list
     const handleAdd = newProduct => {
         addProduct(newProduct)
             .then(response => {
@@ -136,6 +140,7 @@ const App = () => {
             .catch(e => console.log(e))
     }
 
+    //requests to delete an existing product from the list
     const handleRemove = (event, id) => {
         event.preventDefault()
         removeProduct(id)
@@ -152,7 +157,6 @@ const App = () => {
             <div className={styles.cardContent}>
                 <AppBar className={styles.appBar}>
                     <Toolbar >
-
                         <IconButton
                             edge="start"
                             className={styles.menuButton}

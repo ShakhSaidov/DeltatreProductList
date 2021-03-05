@@ -26,9 +26,9 @@ describe('Testing the API', () => {
             expect(Object.keys(response.body).length).toBe(initialDataSize)
         })
 
-        test('FORGE is included in the returned products', async () => {
+        test('The first product "Telequiet" is included in the returned products', async () => {
             const productNames = testData.map(product => product.name)
-            expect(productNames).toContain('FORGE')
+            expect(productNames).toContain('Telequiet')
         })
     })
 

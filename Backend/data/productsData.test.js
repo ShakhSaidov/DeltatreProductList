@@ -1,5 +1,5 @@
-const ProductsList = require('../data/productsList')
-const data = require('../data/productsData')
+const ProductsList = require('./productsList')
+const data = require('./productsData')
 const testData = new ProductsList(data)
 
 let products, productKeys
@@ -19,9 +19,9 @@ describe('Products List data class functions work properly', () => {
     describe('> Searching for a specific product', () => {
         test('Given a valid id', () => {
             const firstProduct = {
-                name: "DIVA",
-                description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
-                quantity: 15,
+                name: "Telequiet",
+                description: "Irure aute nisi dolor ut fugiat irure duis.",
+                quantity: 832
             }
 
             const receivedProduct = testData.find(productKeys[0])

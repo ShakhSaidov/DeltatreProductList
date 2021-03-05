@@ -1,4 +1,4 @@
-const productsService = require('../src/services/productsService')
+const productsService = require('./productsService')
 
 let products, productKeys
 
@@ -18,9 +18,9 @@ describe('Testing the bridge between the API and database', () => {
     describe('> Searching for a specific product', () => {
         test('Given a valid id', () => {
             const firstProduct = {
-                name: "DIVA",
-                description: "An advanced OTT player, synchronizing real-time data with rich interactivity.",
-                quantity: 15,
+                name: "Telequiet",
+                description: "Irure aute nisi dolor ut fugiat irure duis.",
+                quantity: 832
             }
 
             const firstKey = productKeys[0]

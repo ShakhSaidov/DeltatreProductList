@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import React from "react"
 import Product from "./Product"
 
+//Custom styling for the product list
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
         paddingTop: theme.spacing(10),
@@ -11,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+//Component that renders the entire product list as a grid
 const ProductList = ({ productKeys, products, handleRemove }) => {
     const styles = useStyles()
 

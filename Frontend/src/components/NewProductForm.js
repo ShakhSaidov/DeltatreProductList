@@ -3,6 +3,7 @@ import { Button, Container, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import PropTypes from "prop-types"
 
+//Custom styling for the product form
 const useStyles = makeStyles((theme) => ({
     addForm: {
         display: "flex",
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+//Component that displays the product form and handles addition of new products
 const Product = ({ handleAdd, products }) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
@@ -42,6 +44,7 @@ const Product = ({ handleAdd, products }) => {
     const handleDescriptionChange = event => setDescription(event.target.value)
     const handleQuantityChange = event => setQuantity(event.target.value)
 
+    //Checks if the name is not a duplicate, and calls the addProduct function
     const addProduct = event => {
         event.preventDefault()
         if (!products.find(product => product.name.toLowerCase() === name.toLowerCase())) {
