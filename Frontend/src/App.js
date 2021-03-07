@@ -92,15 +92,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    const [data, setData] = useState({})
-    const [etag, setEtag] = useState("")
+    const [session, setSession] = useState({ data: {}, etag: "", loading: true })
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
-    const [loading, setLoading] = useState(true)
     const styles = useStyles()
 
-    let productKeys = Object.keys(data).filter(key => data[key].name.toLowerCase().includes(search.toLowerCase()))
-    let products = Object.values(data).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+    let productKeys = Object.keys(session["data"]).filter(key => (session["data"])[key].name.toLowerCase().includes(search.toLowerCase()))
+    let products = Object.values(session["data"]).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
 
     //renders the page whenever etag changes
     useEffect(() => {
@@ -109,28 +107,36 @@ const App = () => {
         const getData = async () => {
             try {
                 console.log("Entered useEffect")
-                const headResponse = await checkProducts(etag)
+                const headResponse = await checkProducts(session["etag"])
                 console.log("checkProducts response: ", headResponse)
-                setEtag(headResponse.headers["etag"])
                 console.log("headRequest status and type is: ", headResponse.status, typeof headResponse.status)
 
-                if (mounted && headResponse.status !== 304) {
+                if (headResponse.status !== 304) {
                     const getResponse = await getProducts()
                     console.log("getProducts response: ", getResponse)
-                    //console.log("Setting Etag to: ", getResponse.headers["etag"])
-                    //setEtag(getResponse.headers["etag"])
+                    console.log("Setting Etag to the one from GET: ", getResponse.headers["etag"])
+                    console.log("Mounted before GET etag: ", mounted)
                     console.log("Setting Data to: ", getResponse.data)
-                    setData(getResponse.data)
-                    setLoading(false)
+                    setSession({
+                        data: getResponse.data,
+                        etag: getResponse.headers["etag"],
+                        loading: false
+                    })
+                }
+
+                else {
+                    console.log("Setting Etag to the one from HEAD: ", headResponse.headers["etag"])
+                    console.log("Mounted before HEAD etag: ", mounted)
+                    setSession({ ...session, etag: headResponse.headers["etag"] })
                 }
             } catch (error) { console.log(error) }
 
-            if (loading) setLoading(false)
+            if (session["loading"]) setSession({ ...session, loading: false })
         }
 
         getData()
-        return () => { mounted = false }
-    }, [etag])
+        //return () => { mounted = false }
+    }, [session])
 
     const handleAddClick = clicked => setAddClick(clicked)
 
@@ -141,8 +147,7 @@ const App = () => {
         addProduct(newProduct)
             .then(response => {
                 console.log("Response after addition ", response)
-                setData(data)
-                setEtag(response.headers["etag"])
+                setSession({ ...session, etag: response.headers["etag"] })
             })
             .catch(e => console.log(e))
     }
@@ -153,13 +158,12 @@ const App = () => {
         removeProduct(id)
             .then(response => {
                 console.log("Response after remove ", response)
-                setData(data)
-                setEtag(response.headers["etag"])
+                setSession({ ...session, etag: response.headers["etag"] })
             })
             .catch(e => console.log(e))
     }
 
-    if (!loading) {
+    if (!session["loading"]) {
         return (
             <div className={styles.cardContent}>
                 <AppBar className={styles.appBar}>
@@ -212,7 +216,7 @@ const App = () => {
 
                 {addClick && <NewProductForm handleAdd={handleAdd} products={products} />}
 
-                {data &&
+                {session["data"] &&
                     <ProductList
                         productKeys={productKeys}
                         products={products}
