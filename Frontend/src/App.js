@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react"
-//import createPersistedState from "use-persisted-state"
 import { checkProducts, getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
@@ -9,9 +8,6 @@ import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
 import { AppBar, Toolbar, Typography, InputBase, IconButton, CircularProgress } from "@material-ui/core"
 import { fade, makeStyles } from "@material-ui/core/styles"
-
-//Hook that handles a state across multiple tabs
-//const useProductsState = createPersistedState("products")
 
 //Custom styling for the entire page
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +88,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    const [session, setSession] = useState({ data: {}, etag: "", loading: true })
+    const [session, setSession] = useState({ data: {}, etag: "" })
+    const [loading, setLoading] = useState(true)
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
     const styles = useStyles()
@@ -102,40 +99,37 @@ const App = () => {
 
     //renders the page whenever etag changes
     useEffect(() => {
-        let mounted = true
-
         const getData = async () => {
             try {
-                console.log("Entered useEffect")
+                //console.log("Entered useEffect")
                 const headResponse = await checkProducts(session["etag"])
-                console.log("checkProducts response: ", headResponse)
-                console.log("headRequest status and type is: ", headResponse.status, typeof headResponse.status)
+                //console.log("checkProducts response: ", headResponse)
+                //console.log("headRequest status and type is: ", headResponse.status, typeof headResponse.status)
 
                 if (headResponse.status !== 304) {
                     const getResponse = await getProducts()
-                    console.log("getProducts response: ", getResponse)
-                    console.log("Setting Etag to the one from GET: ", getResponse.headers["etag"])
-                    console.log("Mounted before GET etag: ", mounted)
-                    console.log("Setting Data to: ", getResponse.data)
+                    //console.log("getProducts response: ", getResponse)
+                    //console.log("Setting Etag to the one from GET: ", getResponse.headers["etag"])
+                    //console.log("Mounted before GET etag: ", mounted)
+                    //console.log("Setting Data to: ", getResponse.data)
                     setSession({
                         data: getResponse.data,
-                        etag: getResponse.headers["etag"],
-                        loading: false
+                        etag: getResponse.headers["etag"]
                     })
+                    setLoading(false)
                 }
 
                 else {
-                    console.log("Setting Etag to the one from HEAD: ", headResponse.headers["etag"])
-                    console.log("Mounted before HEAD etag: ", mounted)
+                    //console.log("Setting Etag to the one from HEAD: ", headResponse.headers["etag"])
+                    //console.log("Mounted before HEAD etag: ", mounted)
                     setSession({ ...session, etag: headResponse.headers["etag"] })
                 }
             } catch (error) { console.log(error) }
 
-            if (session["loading"]) setSession({ ...session, loading: false })
+            if (loading) setLoading(false)
         }
 
         getData()
-        //return () => { mounted = false }
     }, [session])
 
     const handleAddClick = clicked => setAddClick(clicked)
@@ -146,7 +140,7 @@ const App = () => {
     const handleAdd = newProduct => {
         addProduct(newProduct)
             .then(response => {
-                console.log("Response after addition ", response)
+                //console.log("Response after addition ", response)
                 setSession({ ...session, etag: response.headers["etag"] })
             })
             .catch(e => console.log(e))
@@ -157,13 +151,13 @@ const App = () => {
         event.preventDefault()
         removeProduct(id)
             .then(response => {
-                console.log("Response after remove ", response)
+                //console.log("Response after remove ", response)
                 setSession({ ...session, etag: response.headers["etag"] })
             })
             .catch(e => console.log(e))
     }
 
-    if (!session["loading"]) {
+    if (!loading) {
         return (
             <div className={styles.cardContent}>
                 <AppBar className={styles.appBar}>

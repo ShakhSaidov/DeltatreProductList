@@ -7,12 +7,12 @@ let etag
 //HEAD request for the product list
 router.head('/', async (request, response) => {
     const receivedEtag = request.headers['if-none-match']
-    console.log("Previous etag: ", etag)
-    console.log("If-none-match: ", receivedEtag)
+    //console.log("Previous etag: ", etag)
+    //console.log("If-none-match: ", receivedEtag)
     if (receivedEtag !== undefined && receivedEtag === etag) {
         response.set('Etag', receivedEtag)
         response.sendStatus(304)
-        console.log("No Change. Sending 304 status: ", response.statusCode, response.statusMessage)
+        //console.log("No Change. Sending 304 status: ", response.statusCode, response.statusMessage)
     } else {
         response.sendStatus(200)
     }
@@ -21,14 +21,14 @@ router.head('/', async (request, response) => {
 //GET request for all products from product list
 router.get('/', async (request, response) => {
     const products = await productsService.getProducts()
-    console.log("Retrieved products, length is", Object.keys(products).length)
+    //console.log("Retrieved products, length is", Object.keys(products).length)
     response.json(products)
-    console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
+    //console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
     etag = response.getHeader('Etag')
-    console.log("New etag: ", etag)
-    console.log("------------------------------")
-    console.log("------------------------------")
-    console.log("------------------------------")
+    //console.log("New etag: ", etag)
+    //console.log("------------------------------")
+    //console.log("------------------------------")
+    //console.log("------------------------------")
 })
 
 //GET request for a specific product

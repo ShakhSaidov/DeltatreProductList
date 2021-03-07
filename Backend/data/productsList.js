@@ -22,7 +22,8 @@ class ProductsList {
 
     //Function that adds a new product onto the list
     add(product) {
-        this.data[nanoid()] = product
+        const check = Object.values(this.data).find(p => p.name === product.name)
+        if (check === undefined) this.data[nanoid()] = product
         return this.data
     }
 
