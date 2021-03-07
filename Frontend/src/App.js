@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react"
-import createPersistedState from "use-persisted-state"
-import { getProducts, addProduct, removeProduct } from "./server/ProductsList"
+//import createPersistedState from "use-persisted-state"
+import { checkProducts, getProducts, addProduct, removeProduct } from "./server/ProductsList"
 import ProductList from "./components/ProductList"
 import NewProductForm from "./components/NewProductForm"
 import SearchIcon from "@material-ui/icons/Search"
@@ -11,7 +11,7 @@ import { AppBar, Toolbar, Typography, InputBase, IconButton, CircularProgress } 
 import { fade, makeStyles } from "@material-ui/core/styles"
 
 //Hook that handles a state across multiple tabs
-const useProductsState = createPersistedState("products")
+//const useProductsState = createPersistedState("products")
 
 //Custom styling for the entire page
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    const [data, setData] = useProductsState({})
+    const [data, setData] = useState({})
     const [etag, setEtag] = useState("")
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
@@ -104,25 +104,32 @@ const App = () => {
 
     //renders the page whenever etag changes
     useEffect(() => {
+        let mounted = true
+
         const getData = async () => {
             try {
                 console.log("Entered useEffect")
-                const response = await getProducts(etag)
-                console.log("getProducts response: ", response)
+                const headResponse = await checkProducts(etag)
+                console.log("checkProducts response: ", headResponse)
+                setEtag(headResponse.headers["etag"])
+                console.log("headRequest status and type is: ", headResponse.status, typeof headResponse.status)
 
-                if (response !== undefined && response.status !== 304) {
-                    console.log("Setting Data to: ", response.data)
-                    setData(response.data)
-                    console.log("Setting Etag to: ", response.headers["etag"])
-                    setEtag(response.headers["etag"])
+                if (mounted && headResponse.status !== 304) {
+                    const getResponse = await getProducts()
+                    console.log("getProducts response: ", getResponse)
+                    //console.log("Setting Etag to: ", getResponse.headers["etag"])
+                    //setEtag(getResponse.headers["etag"])
+                    console.log("Setting Data to: ", getResponse.data)
+                    setData(getResponse.data)
                     setLoading(false)
                 }
             } catch (error) { console.log(error) }
 
-            if(loading) setLoading(false)
+            if (loading) setLoading(false)
         }
 
         getData()
+        return () => { mounted = false }
     }, [etag])
 
     const handleAddClick = clicked => setAddClick(clicked)

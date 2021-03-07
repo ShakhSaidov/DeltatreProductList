@@ -6,10 +6,12 @@ axios.defaults.validateStatus = () => {
     return status < 400
 }
 
-//get request for the products list
-const getProducts = etag => axios
-    .get(rootUrl, { headers: { "if-none-match": etag } })
+const checkProducts = etag => axios
+    .head(rootUrl, { headers: { "if-none-match": etag } })
     .then(response => response)
+
+//get request for the products list
+const getProducts = () => axios.get(rootUrl).then(response => response)
 
 //post request for a new product
 const addProduct = newProduct => axios.post(rootUrl, newProduct).then(response => response)
@@ -18,6 +20,7 @@ const addProduct = newProduct => axios.post(rootUrl, newProduct).then(response =
 const removeProduct = id => axios.delete(`${rootUrl}/${id}`).then(response => response)
 
 export {
+    checkProducts,
     getProducts,
     addProduct,
     removeProduct

@@ -1,6 +1,9 @@
 ### Default Page
 GET http://localhost:3001
 
+### HEAD
+HEAD http://localhost:3001/products
+
 ### Product list
 GET http://localhost:3001/products
 

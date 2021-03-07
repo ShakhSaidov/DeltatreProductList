@@ -4,26 +4,34 @@ const productsService = require('../services/productsService')
 const router = express.Router()
 let etag
 
-//GET request for all products from product list
-router.get('/', async (request, response) => {
+//HEAD request for the product list
+router.head('/', async (request, response) => {
     const newEtag = request.headers['if-none-match']
-    console.log("Previous etag: ", etag)
-    console.log("If-none-match: ", newEtag)
+    console.log("Previous etag and its type: ", etag, typeof etag)
+    console.log("If-none-match and its type: ", newEtag, typeof newEtag)
 
     if (newEtag !== undefined && newEtag === etag) {
         response.sendStatus(304)
         console.log("No Change. Sending 304 status: ", response.statusCode, response.statusMessage)
     } else {
-        const products = await productsService.getProducts()
-        console.log("Retrieved products, length is", Object.keys(products).length)
-        response.json(products)
-        console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
+        if(etag !== undefined) response.setHeader('Etag', etag)
+        response.sendStatus(200)
         etag = response.getHeader('Etag')
-        console.log("New etag: ", etag)
-        console.log("------------------------------")
-        console.log("------------------------------")
-        console.log("------------------------------")
+        console.log("new etag: ", etag)
     }
+})
+
+//GET request for all products from product list
+router.get('/', async (request, response) => {
+    const products = await productsService.getProducts()
+    console.log("Retrieved products, length is", Object.keys(products).length)
+    response.json(products)
+    console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
+
+    console.log("------------------------------")
+    console.log("------------------------------")
+    console.log("------------------------------")
+
 })
 
 //GET request for a specific product
