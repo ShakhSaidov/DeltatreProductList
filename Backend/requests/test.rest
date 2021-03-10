@@ -8,20 +8,20 @@ HEAD http://localhost:3001/products
 GET http://localhost:3001/products
 
 ### Single product
-GET http://localhost:3001/products/w11H5lBZ2UPC5P6Hi9RzT
+GET http://localhost:3001/products/6048e40c0c38054ed4c6aae4
 
 ### Invalid product
-GET http://localhost:3001/products/qewtq
+GET http://localhost:3001/products/6048daa298f9cc04f4e778f6
 
 ### Adding product
 POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-  "name": "Testing Product",
-  "description": "Generic product description",
-  "quantity": 99
+  "name": "qreqte",
+  "description": "qttqtrq",
+  "quantity": 55
 }
 
 ### Removing product
-DELETE http://localhost:3001/products/PY87YKR_bbbc7HWeR3xgO
+DELETE http://localhost:3001/products/5a3d5da59070081a82a3445

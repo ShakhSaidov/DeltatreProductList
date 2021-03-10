@@ -13,20 +13,20 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 //Component that renders the entire product list as a grid
-const ProductList = ({ productKeys, products, handleRemove }) => {
+const ProductList = ({ products, handleRemove }) => {
     const styles = useStyles()
 
-    if (products && productKeys) {
+    if (products) {
         return (
             <Container className={styles.cardGrid} maxWidth="lg">
                 <Grid container spacing={5}>
-                    {productKeys.map((id, index) => {
+                    {products.map(product => {
                         return (
-                            <Grid item key={id} xs={12} sm={6} md={4}>
+                            <Grid item key={product.id} xs={12} sm={6} md={4}>
                                 <Product
-                                    key={id}
-                                    id={id}
-                                    product={products[index]}
+                                    key={product.id}
+                                    id={product.id}
+                                    product={product}
                                     handleRemove={handleRemove}
                                 />
                             </Grid>

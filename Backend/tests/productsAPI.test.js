@@ -1,15 +1,19 @@
+const mongoose = require('mongoose')
 const supertest = require('supertest')
+const testHelper = require('./testHelper')
 const app = require('../src/app')
-const testAPI = supertest(app)
+const Product = require('../src/models/product')
 
-let testData, testDataKeys, initialDataSize
+const testAPI = supertest(app)
+let initialData
 
 describe('Testing the API', () => {
     beforeEach(async () => {
-        const response = await testAPI.get('/products')
-        testData = Object.values(response.body)
-        testDataKeys = Object.keys(response.body)
-        initialDataSize = testData.length
+        initialData = testHelper.testData
+        await Product.deleteMany({})
+        const productObjects = initialData.map(product => new Product(product))
+        const promises = productObjects.map(product => product.save())
+        await Promise.all(promises)
     })
 
     //Testing the product list as a whole - GET
@@ -23,33 +27,46 @@ describe('Testing the API', () => {
 
         test('All initial products are returned', async () => {
             const response = await testAPI.get('/products')
-            expect(Object.keys(response.body).length).toBe(initialDataSize)
+            expect(response.body).toHaveLength(initialData.length)
         })
 
-        test('The first product "Telequiet" is included in the returned products', async () => {
-            const productNames = testData.map(product => product.name)
-            expect(productNames).toContain('Telequiet')
+        test('The first product "Test Product 1" is included in the returned products', async () => {
+            const productNames = initialData.map(product => product.name)
+            expect(productNames).toContain('Test Product 1')
         })
     })
 
     //Testing a specific product - GET
     describe('> Testing a specific product', () => {
         test('Success when given a valid id', async () => {
-            const firstProductKey = testDataKeys[0]
-            const firstProduct = testData[0]
+            const products = await testHelper.getProducts()
+            const firstProduct = products[0]
             const returnedProduct = await testAPI
-                .get(`/products/${firstProductKey}`)
+                .get(`/products/${firstProduct.id}`)
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
 
             expect(returnedProduct.body).toEqual(firstProduct)
         })
 
-        test('Failure when given an invalid id', async () => {
+        test('Failure when given a non-existing id', async () => {
+            const nonExistingId = await testHelper.generateNonExistingId()
+
             await testAPI
-                .get(`/products/-1`)
+                .get(`/products/${nonExistingId}`)
                 .expect(404)
         })
+
+        /*
+        test('Failure when given an invalid id', async () => {
+            const invalidId = '5a3d5da59070081a82a3445'
+
+            const ex = await testAPI
+                .get(`/products/${invalidId}`)
+                .expect(404)
+            console.log("result is: ", ex)
+        })
+        */
     })
 
     //Testing the addition of a new product - POST
@@ -67,11 +84,10 @@ describe('Testing the API', () => {
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
 
-            const response = await testAPI.get('/products')
-            const productsAfterAddition = Object.values(response.body)
-            expect(productsAfterAddition.length).toBe(initialDataSize + 1)
+            const productsAfter = await testHelper.getProducts()
+            expect(productsAfter).toHaveLength(initialData.length + 1)
 
-            const productNames = productsAfterAddition.map(product => product.name)
+            const productNames = productsAfter.map(product => product.name)
             expect(productNames).toContain('new test product')
         })
 
@@ -88,9 +104,8 @@ describe('Testing the API', () => {
                     .send(newProduct)
                     .expect(422)
 
-                const response = await testAPI.get('/products')
-                const productsAfterAddition = Object.values(response.body)
-                expect(productsAfterAddition.length).toBe(initialDataSize)
+                const productsAfter = await testHelper.getProducts()
+                expect(productsAfter).toHaveLength(initialData.length)
             })
 
             test('Invalid when no description given', async () => {
@@ -105,9 +120,8 @@ describe('Testing the API', () => {
                     .send(newProduct)
                     .expect(422)
 
-                const response = await testAPI.get('/products')
-                const productsAfterAddition = Object.values(response.body)
-                expect(productsAfterAddition.length).toBe(initialDataSize)
+                const productsAfter = await testHelper.getProducts()
+                expect(productsAfter).toHaveLength(initialData.length)
             })
 
             describe('> Quantity', () => {
@@ -123,9 +137,8 @@ describe('Testing the API', () => {
                         .send(newProduct)
                         .expect(422)
 
-                    const response = await testAPI.get('/products')
-                    const productsAfterAddition = Object.values(response.body)
-                    expect(productsAfterAddition.length).toBe(initialDataSize)
+                    const productsAfter = await testHelper.getProducts()
+                    expect(productsAfter).toHaveLength(initialData.length)
                 })
 
                 test('Invalid when quantity is negative', async () => {
@@ -140,9 +153,8 @@ describe('Testing the API', () => {
                         .send(newProduct)
                         .expect(422)
 
-                    const response = await testAPI.get('/products')
-                    const productsAfterAddition = Object.values(response.body)
-                    expect(productsAfterAddition.length).toBe(initialDataSize)
+                    const productsAfter = await testHelper.getProducts()
+                    expect(productsAfter).toHaveLength(initialData.length)
                 })
             })
         })
@@ -151,28 +163,32 @@ describe('Testing the API', () => {
     //Testing the deletion of a product - DELETE
     describe('> Deleting a product', () => {
         test('Success when deleting an existing product', async () => {
-            const productToDelete = testDataKeys[0]
+            const products = await testHelper.getProducts()
+            const productToDelete = products[0]
 
             await testAPI
-                .delete(`/products/${productToDelete}`)
+                .delete(`/products/${productToDelete.id}`)
                 .expect(204)
 
-            const response = await testAPI.get('/products')
-            const productsAfterDeletion = Object.values(response.body)
-            expect(productsAfterDeletion.length).toBe(initialDataSize - 1)
+            const productsAfter = await testHelper.getProducts()
+            expect(productsAfter).toHaveLength(initialData.length - 1)
 
-            const productNames = productsAfterDeletion.map(product => product.name)
+            const productNames = productsAfter.map(product => product.name)
             expect(productNames).not.toContain(productToDelete.name)
         })
 
         test('Failure when deleting a non existing product', async () => {
+            const invalidId = -1
             await testAPI
-                .delete(`/products/-1`)
+                .delete(`/products/${invalidId}`)
                 .expect(405)
 
-            const response = await testAPI.get('/products')
-            const productsAfterDeletion = Object.values(response.body)
-            expect(productsAfterDeletion.length).toBe(initialDataSize)
+            const productsAfter = await testHelper.getProducts()
+            expect(productsAfter).toHaveLength(initialData.length)
         })
     })
+})
+
+afterAll(() => {
+    mongoose.connection.close()
 })

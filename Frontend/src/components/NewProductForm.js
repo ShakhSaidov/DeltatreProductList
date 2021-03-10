@@ -69,7 +69,7 @@ const Product = ({ handleAdd, products }) => {
         <Container className={styles.addForm}>
             <form className={styles.form} onSubmit={addProduct}>
                 <Container className={styles.warning}>
-                    <Typography component={"div"} y variant="h6" align="center">
+                    <Typography component={"div"} variant="h6" align="center">
                         {duplicate ? "Name already exists in the list!" : null}
                     </Typography>
                 </Container>

@@ -88,14 +88,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const App = () => {
-    const [session, setSession] = useState({ data: {}, etag: "" })
+    const [session, setSession] = useState({ products: [], etag: "" })
     const [loading, setLoading] = useState(true)
     const [addClick, setAddClick] = useState()
     const [search, setSearch] = useState("")
     const styles = useStyles()
 
-    let productKeys = Object.keys(session["data"]).filter(key => (session["data"])[key].name.toLowerCase().includes(search.toLowerCase()))
-    let products = Object.values(session["data"]).filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+    let products = session["products"].filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
 
     //renders the page whenever etag changes
     useEffect(() => {
@@ -113,7 +112,7 @@ const App = () => {
                     //console.log("Mounted before GET etag: ", mounted)
                     //console.log("Setting Data to: ", getResponse.data)
                     setSession({
-                        data: getResponse.data,
+                        products: getResponse.data,
                         etag: getResponse.headers["etag"]
                     })
                     setLoading(false)
@@ -210,9 +209,8 @@ const App = () => {
 
                 {addClick && <NewProductForm handleAdd={handleAdd} products={products} />}
 
-                {session["data"] &&
+                {session["products"] &&
                     <ProductList
-                        productKeys={productKeys}
                         products={products}
                         handleRemove={handleRemove}
                     />

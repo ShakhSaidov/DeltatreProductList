@@ -1,5 +1,7 @@
+require('dotenv').config()
+const mongoose = require('mongoose')
 const express = require('express')
-const productsService = require('../services/productsService')
+const Product = require('../models/product')
 
 const router = express.Router()
 let etag
@@ -20,9 +22,9 @@ router.head('/', async (request, response) => {
 
 //GET request for all products from product list
 router.get('/', async (request, response) => {
-    const products = await productsService.getProducts()
+    const products = await Product.find({}).then(products => products)
     //console.log("Retrieved products, length is", Object.keys(products).length)
-    response.json(products)
+    response.json(products.map(product => product.toJSON()))
     //console.log("Products sent back to frontend. Response status and message:", response.statusCode, response.statusMessage)
     etag = response.getHeader('Etag')
     //console.log("New etag: ", etag)
@@ -33,25 +35,42 @@ router.get('/', async (request, response) => {
 
 //GET request for a specific product
 router.get('/:id', async (request, response) => {
-    const product = await productsService.findProduct(request.params.id)
-    if (product) response.json(product)
+    const id = request.params.id
+    if (mongoose.isValidObjectId(id)) {
+        const product = await Product.findById(request.params.id)
+        if (product) response.json(product.toJSON())
+        else response.status(404).send({ error: "invalid id" })
+    }
 
     else response.status(404).send({ error: "invalid id" })
 })
 
 //POST request to add a new product onto the product list
 router.post('/', async (request, response) => {
-    const newProducts = await productsService.addProduct(request.body)
-    response.json(newProducts)
+    const object = request.body
+    if (object.name === '' || object.description === '' || object.quantity < 0 || object.quantity === '') {
+        response.status(422).send({ error: "missing product information" })
+    } else {
+        const check = await Product.exists({ name: object.name })
+        if (!check) {
+            const newProduct = new Product({...object})
+            await newProduct.save()
+        }
 
+        const newProducts = await Product.find({}).then(products => products)
+        response.json(newProducts.map(product => product.toJSON()))
+    }
 })
 
 //DELETE request to remove a product form product list
 router.delete('/:id', async (request, response) => {
-    const success = await productsService.deleteProduct(request.params.id)
-    if (success) response.sendStatus(204)
+    const id = request.params.id
+    if (mongoose.isValidObjectId(id)) {
+        await Product.findByIdAndRemove(id)
+        response.sendStatus(204)
+    }
 
-    else response.status(405).send({ error: "Can't perform method" })
+    else response.status(405).send({ error: "Can't perform deletion" })
 })
 
 module.exports = router
