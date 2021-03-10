@@ -8,17 +8,19 @@
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "dev": "NODE_ENV=development nodemon index.js",
     "getBuild": "rm -rf build && cd ../Frontend/ && npm run build --prod && cp -r build ../Deployed/",
-        "deploy": "npm run getBuild && git add . && git commit -m 'deployed' && git push heroku master",
+    "deploy": "npm run getBuild && git add . && git commit -m 'deployed' && git push heroku master",
     "lint": "eslint ."
   },
   "author": "Shakh Saidov",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "etag": "^1.8.1",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "joi": "^17.3.0",
+    "mongoose": "^5.11.19",
     "morgan": "^1.10.0",
     "nanoid": "^3.1.20"
   },

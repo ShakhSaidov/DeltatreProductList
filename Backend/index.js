@@ -2,7 +2,6 @@ const app = require('./src/app')
 const http = require('http').Server(app)
 const logger = require('./utils/logger')
 
-/*eslint-disable*/
 const PORT = process.env.PORT || 3001
 
 http.listen(PORT, () => {

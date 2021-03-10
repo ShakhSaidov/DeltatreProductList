@@ -41,15 +41,9 @@ router.get('/:id', async (request, response) => {
 
 //POST request to add a new product onto the product list
 router.post('/', async (request, response) => {
-    const { error } = await productsService.validateProduct(request.body)
-    if (error) {
-        response.status(422).send({
-            error: error.details.map(detail => detail.message)
-        })
-    } else {
-        const newProducts = await productsService.addProduct(request.body)
-        response.json(newProducts)
-    }
+    const newProducts = await productsService.addProduct(request.body)
+    response.json(newProducts)
+
 })
 
 //DELETE request to remove a product form product list
