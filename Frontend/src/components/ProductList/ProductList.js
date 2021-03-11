@@ -2,7 +2,7 @@
 import { Container, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import React from "react"
-import Product from "./Product"
+import Product from "../Product/Product"
 
 //Custom styling for the product list
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,6 @@ const ProductList = ({ products, handleRemove }) => {
                             <Grid item key={product.id} xs={12} sm={6} md={4}>
                                 <Product
                                     key={product.id}
-                                    id={product.id}
                                     product={product}
                                     handleRemove={handleRemove}
                                 />

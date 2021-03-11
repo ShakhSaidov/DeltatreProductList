@@ -34,29 +34,20 @@ const useStyles = makeStyles((theme) => ({
 
 //Component that displays the product form and handles addition of new products
 const Product = ({ handleAdd, products }) => {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [quantity, setQuantity] = useState("")
+    const [product, setProduct] = useState({ name: "", description: "", quantity: "" })
     const [duplicate, setDuplicate] = useState(false)
     const styles = useStyles()
 
-    const handleNameChange = event => setName(event.target.value)
-    const handleDescriptionChange = event => setDescription(event.target.value)
-    const handleQuantityChange = event => setQuantity(event.target.value)
+    const handleNameChange = event => setProduct({ ...product, name: event.target.value })
+    const handleDescriptionChange = event => setProduct({ ...product, description: event.target.value })
+    const handleQuantityChange = event => setProduct({ ...product, quantity: event.target.value })
 
     //Checks if the name is not a duplicate, and calls the addProduct function
     const addProduct = event => {
         event.preventDefault()
-        if (!products.find(product => product.name.toLowerCase() === name.toLowerCase())) {
-            handleAdd({
-                name: name,
-                description: description,
-                quantity: quantity,
-            })
-
-            setName("")
-            setDescription("")
-            setQuantity("")
+        if (!products.find(p => p.name.toLowerCase() === product["name"].toLowerCase())) {
+            handleAdd({ ...product })
+            setProduct(({ name: "", description: "", quantity: "" }))
         } else {
             setDuplicate(true)
             setTimeout(() => {
@@ -83,9 +74,10 @@ const Product = ({ handleAdd, products }) => {
                     label="Name"
                     name="name"
                     type="text"
+                    inputProps={{ "data-testid": "Name" }}
                     autoComplete="name"
                     autoFocus
-                    value={name}
+                    value={product["name"]}
                     onChange={handleNameChange}
                 />
 
@@ -98,12 +90,13 @@ const Product = ({ handleAdd, products }) => {
                     label="Description"
                     name="description"
                     type="text"
+                    inputProps={{ "data-testid": "Description" }}
                     multiline
                     rows={2}
                     rowsMax={4}
                     autoComplete="Description"
                     autoFocus
-                    value={description}
+                    value={product["description"]}
                     onChange={handleDescriptionChange}
                 />
 
@@ -116,14 +109,10 @@ const Product = ({ handleAdd, products }) => {
                     label="Quantity"
                     name="quantity"
                     type="number"
-                    InputProps={{
-                        inputProps: {
-                            min: 0
-                        }
-                    }}
+                    inputProps={{ "data-testid": "Quantity", min: 0 }}
                     autoComplete="name"
                     autoFocus
-                    value={quantity}
+                    value={product["quantity"]}
                     onChange={handleQuantityChange}
                 />
 

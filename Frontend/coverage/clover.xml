@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1615503202134" clover="3.2.0">
+  <project timestamp="1615503202134" name="All files">
+    <metrics statements="41" coveredstatements="31" conditionals="14" coveredconditionals="9" methods="17" coveredmethods="13" elements="72" coveredelements="53" complexity="0" loc="41" ncloc="41" packages="3" files="3" classes="3"/>
+    <package name="NewProductForm">
+      <metrics statements="18" coveredstatements="11" conditionals="4" coveredconditionals="1" methods="8" coveredmethods="5"/>
+      <file name="NewProductForm.js" path="D:\CS\- Projects\Work Projects\Deltatre Application Assignment\Frontend\src\components\NewProductForm\NewProductForm.js">
+        <metrics statements="18" coveredstatements="11" conditionals="4" coveredconditionals="1" methods="8" coveredmethods="5"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="38" count="6" type="stmt"/>
+        <line num="39" count="6" type="stmt"/>
+        <line num="41" count="6" type="stmt"/>
+        <line num="42" count="6" type="stmt"/>
+        <line num="43" count="6" type="stmt"/>
+        <line num="46" count="6" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="59" count="6" type="stmt"/>
+        <line num="132" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Product">
+      <metrics statements="16" coveredstatements="14" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="5"/>
+      <file name="Product.js" path="D:\CS\- Projects\Work Projects\Deltatre Application Assignment\Frontend\src\components\Product\Product.js">
+        <metrics statements="16" coveredstatements="14" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="5"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="22" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="11" type="stmt"/>
+        <line num="54" count="11" type="stmt"/>
+        <line num="57" count="11" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="64" count="11" type="cond" truecount="1" falsecount="1"/>
+        <line num="65" count="11" type="stmt"/>
+        <line num="91" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="ProductList">
+      <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+      <file name="ProductList.js" path="D:\CS\- Projects\Work Projects\Deltatre Application Assignment\Frontend\src\components\ProductList\ProductList.js">
+        <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

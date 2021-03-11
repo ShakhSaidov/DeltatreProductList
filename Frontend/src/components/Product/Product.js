@@ -49,7 +49,7 @@ const ProductInfo = ({ info, value }) => {
 }
 
 //Component that displays the whole product
-const Product = ({ id, product, handleRemove }) => {
+const Product = ({ product, handleRemove }) => {
     const [warnRemoval, setWarnRemoval] = useState(false)           //shows a warning when a user tries to remove a product
     const styles = useStyles()
 
@@ -86,11 +86,11 @@ const Product = ({ id, product, handleRemove }) => {
                 <CardActions className={styles.cardActions}>
                     <Button
                         className={styles.button} variant="contained"
-                        color="primary" value={id}
+                        color="primary" value={product.id}
                         onClick={(event) => {
                             if (!warnRemoval) confirmRemove()
                             else {
-                                handleRemove(event, id)
+                                handleRemove(event, product.id)
                                 setWarnRemoval(false)
                             }
                         }}>
