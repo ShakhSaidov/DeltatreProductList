@@ -26,7 +26,7 @@ app.use('/products', productRouter)
 
 if(process.env.NODE_ENV === 'test'){
     const testRouter = require ('./routes/testing')
-    app.use('./testing', testRouter)
+    app.use('/testing', testRouter)
 }
 
 app.set('etag', 'strong')

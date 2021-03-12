@@ -164,6 +164,7 @@ const App = () => {
                         <IconButton
                             edge="start"
                             className={styles.menuButton}
+                            id="iconButton"
                             color="inherit"
                             aria-label="open drawer"
                             onClick={() => {
@@ -194,6 +195,7 @@ const App = () => {
                         <div className={styles.search}>
                             <div className={styles.searchIcon}> <SearchIcon /> </div>
                             <InputBase
+                                id="productSearch"
                                 placeholder="Search…"
                                 classes={{
                                     root: styles.inputRoot,
@@ -211,6 +213,7 @@ const App = () => {
 
                 {session["products"] &&
                     <ProductList
+                        id="productList"
                         products={products}
                         handleRemove={handleRemove}
                     />

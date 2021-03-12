@@ -70,7 +70,7 @@ const Product = ({ handleAdd, products }) => {
                     margin="normal"
                     required
                     fullWidth
-                    id="name"
+                    id="productName"
                     label="Name"
                     name="name"
                     type="text"
@@ -86,7 +86,7 @@ const Product = ({ handleAdd, products }) => {
                     margin="normal"
                     required
                     fullWidth
-                    id="description"
+                    id="productDescription"
                     label="Description"
                     name="description"
                     type="text"
@@ -105,7 +105,7 @@ const Product = ({ handleAdd, products }) => {
                     margin="normal"
                     required
                     fullWidth
-                    id="quantity"
+                    id="productQuantity"
                     label="Quantity"
                     name="quantity"
                     type="number"
@@ -117,6 +117,7 @@ const Product = ({ handleAdd, products }) => {
                 />
 
                 <Button
+                    id="productAddButton"
                     className={styles.button}
                     variant="contained"
                     color="primary"

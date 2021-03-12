@@ -63,15 +63,15 @@ const Product = ({ product, handleRemove }) => {
 
     if (product) {
         return (
-            <Card elevation={3} className={styles.card}>
+            <Card id="productCard" elevation={3} className={styles.card}>
                 <CardContent className={styles.cardContent}>
-                    <Typography component={"div"} variant="h4" align="center"> <b>{product.name}</b> </Typography>
+                    <Typography id="productCardName" component={"div"} variant="h4" align="center"> <b>{product.name}</b> </Typography>
                     <Box p={2}>
-                        <Typography component={"div"} variant="h6" paragraph={true}>
+                        <Typography id="productCardDescription" component={"div"} variant="h6" paragraph={true}>
                             <ProductInfo info="Description" value={product.description} />
                         </Typography>
 
-                        <Typography component={"div"} variant="h6">
+                        <Typography id="productCardQuantity" component={"div"} variant="h6">
                             <ProductInfo info="Qty. Available" value={product.quantity} />
                         </Typography>
                     </Box>
@@ -85,6 +85,7 @@ const Product = ({ product, handleRemove }) => {
 
                 <CardActions className={styles.cardActions}>
                     <Button
+                        id="productRemoveButton"
                         className={styles.button} variant="contained"
                         color="primary" value={product.id}
                         onClick={(event) => {

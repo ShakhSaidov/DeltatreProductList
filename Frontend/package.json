@@ -22,7 +22,8 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json",
     "eslint": "eslint .",
-    "cypress": "cypress open"
+    "cypress-gui": "cypress open",
+    "cypress": "cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +48,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "cypress": "^6.6.0",
+    "cypress-react-selector": "^2.3.6",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-jest": "^24.1.5"
   }
