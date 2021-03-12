@@ -1,9 +1,8 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const express = require('express')
 const Product = require('../models/product')
+const router = require('express').Router()
 
-const router = express.Router()
 let etag
 
 //HEAD request for the product list

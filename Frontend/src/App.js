@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react"
 import { checkProducts, getProducts, addProduct, removeProduct } from "./server/ProductsList"
-import ProductList from "./components/ProductList/ProductList"
-import NewProductForm from "./components/NewProductForm/NewProductForm"
+import ProductList from "./components/product_list/product_list"
+import NewProductForm from "./components/new_product_form/new_product_form"
 import SearchIcon from "@material-ui/icons/Search"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"

@@ -11,9 +11,7 @@ describe('Testing the API', () => {
     beforeEach(async () => {
         initialData = testHelper.testData
         await Product.deleteMany({})
-        const productObjects = initialData.map(product => new Product(product))
-        const promises = productObjects.map(product => product.save())
-        await Promise.all(promises)
+        await Product.insertMany(initialData)
     })
 
     //Testing the product list as a whole - GET

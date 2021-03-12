@@ -2,7 +2,7 @@
 import { Container, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import React from "react"
-import Product from "../Product/Product"
+import Product from "../Product/product"
 
 //Custom styling for the product list
 const useStyles = makeStyles((theme) => ({

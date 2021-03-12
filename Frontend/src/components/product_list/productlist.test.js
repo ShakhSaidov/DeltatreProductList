@@ -1,7 +1,7 @@
 import React from "react"
 import "@testing-library/jest-dom/extend-expect"
 import { render } from "@testing-library/react"
-import ProductList from "./ProductList"
+import ProductList from "./product_list"
 
 const testData = [
     {
