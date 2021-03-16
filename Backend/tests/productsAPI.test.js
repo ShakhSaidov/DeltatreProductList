@@ -54,17 +54,6 @@ describe('Testing the API', () => {
                 .get(`/products/${nonExistingId}`)
                 .expect(404)
         })
-
-        /*
-        test('Failure when given an invalid id', async () => {
-            const invalidId = '5a3d5da59070081a82a3445'
-
-            const ex = await testAPI
-                .get(`/products/${invalidId}`)
-                .expect(404)
-            console.log("result is: ", ex)
-        })
-        */
     })
 
     //Testing the addition of a new product - POST
