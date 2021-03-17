@@ -1,11 +1,14 @@
-const mongoose = require('mongoose')
-const supertest = require('supertest')
-const testHelper = require('./testHelper')
-const app = require('../src/app')
-const Product = require('../src/models/product')
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import mongoose from 'mongoose'
+import supertest from 'supertest'
+import testHelper from './testHelper'
+import app from '../src/app'
+import Product from '../src/models/product'
+import { TestProduct } from '../utils/types'
 
-const testAPI = supertest(app)
-let initialData
+let initialData: TestProduct[]
 
 describe('Testing the API', () => {
     beforeEach(async () => {
@@ -17,18 +20,18 @@ describe('Testing the API', () => {
     //Testing the product list as a whole - GET
     describe('> Testing products list as a whole', () => {
         test('Products are returned in the proper format (json)', async () => {
-            await testAPI
+            await supertest(app)
                 .get('/products')
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
         })
 
         test('All initial products are returned', async () => {
-            const response = await testAPI.get('/products')
+            const response = await supertest(app).get('/products')
             expect(response.body).toHaveLength(initialData.length)
         })
 
-        test('The first product "Test Product 1" is included in the returned products', async () => {
+        test('The first product "Test Product 1" is included in the returned products', () => {
             const productNames = initialData.map(product => product.name)
             expect(productNames).toContain('Test Product 1')
         })
@@ -39,7 +42,7 @@ describe('Testing the API', () => {
         test('Success when given a valid id', async () => {
             const products = await testHelper.getProducts()
             const firstProduct = products[0]
-            const returnedProduct = await testAPI
+            const returnedProduct = await supertest(app)
                 .get(`/products/${firstProduct.id}`)
                 .expect(200)
                 .expect('Content-Type', /application\/json/)
@@ -50,7 +53,7 @@ describe('Testing the API', () => {
         test('Failure when given a non-existing id', async () => {
             const nonExistingId = await testHelper.generateNonExistingId()
 
-            await testAPI
+            await supertest(app)
                 .get(`/products/${nonExistingId}`)
                 .expect(404)
         })
@@ -65,7 +68,7 @@ describe('Testing the API', () => {
                 quantity: 100
             }
 
-            await testAPI
+            await supertest(app)
                 .post('/products')
                 .send(newProduct)
                 .expect(200)
@@ -86,7 +89,7 @@ describe('Testing the API', () => {
                     quantity: 100
                 }
 
-                await testAPI
+                await supertest(app)
                     .post('/products')
                     .send(newProduct)
                     .expect(422)
@@ -102,7 +105,7 @@ describe('Testing the API', () => {
                     quantity: 100
                 }
 
-                await testAPI
+                await supertest(app)
                     .post('/products')
                     .send(newProduct)
                     .expect(422)
@@ -116,10 +119,10 @@ describe('Testing the API', () => {
                     const newProduct = {
                         name: "new testing product",
                         description: "generic description",
-                        quantity: ''
+                        quantity: null
                     }
 
-                    await testAPI
+                    await supertest(app)
                         .post('/products')
                         .send(newProduct)
                         .expect(422)
@@ -135,7 +138,7 @@ describe('Testing the API', () => {
                         quantity: -55
                     }
 
-                    await testAPI
+                    await supertest(app)
                         .post('/products')
                         .send(newProduct)
                         .expect(422)
@@ -153,7 +156,7 @@ describe('Testing the API', () => {
             const products = await testHelper.getProducts()
             const productToDelete = products[0]
 
-            await testAPI
+            await supertest(app)
                 .delete(`/products/${productToDelete.id}`)
                 .expect(204)
 
@@ -166,7 +169,7 @@ describe('Testing the API', () => {
 
         test('Failure when deleting a non existing product', async () => {
             const invalidId = -1
-            await testAPI
+            await supertest(app)
                 .delete(`/products/${invalidId}`)
                 .expect(405)
 
@@ -176,6 +179,6 @@ describe('Testing the API', () => {
     })
 })
 
-afterAll(() => {
-    mongoose.connection.close()
+afterAll(async () => {
+    await mongoose.connection.close()
 })

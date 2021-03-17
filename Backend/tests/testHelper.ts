@@ -1,6 +1,8 @@
-const Product = require('../src/models/product')
+import Product from '../src/models/product'
+import { IProduct, TestProduct } from '../utils/types'
+import { LeanDocument } from 'mongoose'
 
-const testData = [
+const testData: TestProduct[] = [
     {
         name: 'Test Product 1',
         description: 'Generic description for first test product',
@@ -28,7 +30,7 @@ const testData = [
     }
 ]
 
-const generateNonExistingId = async () => {
+const generateNonExistingId = async (): Promise<string | undefined> => {
     const product = new Product({
         name: 'Temporary Product',
         description: 'Generic description for temporary product',
@@ -37,15 +39,15 @@ const generateNonExistingId = async () => {
     await product.save()
     await product.remove()
 
-    return product._id.toString()
+    return product._id?.toString()
 }
 
-const getProducts = async () => {
+const getProducts = async (): Promise<LeanDocument<IProduct>[]> => {
     const products = await Product.find({})
     return products.map(product => product.toJSON())
 }
 
-module.exports = {
+export default {
     testData,
     getProducts,
     generateNonExistingId

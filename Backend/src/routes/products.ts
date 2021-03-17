@@ -1,12 +1,17 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-const Product = require('../models/product')
-const router = require('express').Router()
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-let etag
+import mongoose from 'mongoose'
+import Product from '../models/product'
+import { Router, Request, Response } from 'express'
+import { IProduct } from '../../utils/types'
+
+const router: Router = Router()
+let etag: string | number | string[] | undefined
 
 //HEAD request for the product list
-router.head('/', async (request, response) => {
+router.head('/', (request: Request, response: Response) => {
     const receivedEtag = request.headers['if-none-match']
     //console.log("Previous etag: ", etag)
     //console.log("If-none-match: ", receivedEtag)
@@ -20,7 +25,7 @@ router.head('/', async (request, response) => {
 })
 
 //GET request for all products from product list
-router.get('/', async (request, response) => {
+router.get('/', async (_request: Request, response: Response) => {
     const products = await Product.find({}).then(products => products)
     //console.log("Retrieved products, length is", Object.keys(products).length)
     response.json(products.map(product => product.toJSON()))
@@ -45,9 +50,9 @@ router.get('/:id', async (request, response) => {
 })
 
 //POST request to add a new product onto the product list
-router.post('/', async (request, response) => {
-    const object = request.body
-    if (object.name === '' || object.description === '' || object.quantity < 0 || object.quantity === '') {
+router.post('/', async (request: Request, response: Response) => {
+    const object = request.body as IProduct
+    if (object.name === '' || object.description === '' || object.quantity < 0) {
         response.status(422).send({ error: "missing product information" })
     } else {
         const check = await Product.exists({ name: object.name })
@@ -62,7 +67,7 @@ router.post('/', async (request, response) => {
 })
 
 //DELETE request to remove a product form product list
-router.delete('/:id', async (request, response) => {
+router.delete('/:id', async (request: Request, response: Response) => {
     const id = request.params.id
     if (mongoose.isValidObjectId(id)) {
         await Product.findByIdAndRemove(id)
@@ -72,4 +77,4 @@ router.delete('/:id', async (request, response) => {
     else response.status(405).send({ error: "Can't perform deletion" })
 })
 
-module.exports = router
+export default router

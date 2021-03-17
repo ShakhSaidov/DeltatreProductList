@@ -1,6 +1,7 @@
-const logger = require('./logger')
+import { Request, Response, NextFunction } from 'express'
+import logger from './logger'
 
-const consoleLogger = (request, response, next) => {
+const consoleLogger = (request: Request, _response: Response, next: NextFunction): void => {
     logger.log('Request Method:', request.method)
     logger.log('Request Path:  ', request.path)
     logger.log('Request Body:  ', request.body)
@@ -8,14 +9,12 @@ const consoleLogger = (request, response, next) => {
     next()
 }
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error: Error, _request: Request, _response: Response, next: NextFunction): void => {
     logger.error('Error caught: ', error.message)
     next(error)
 }
 
-const middleware = {
+export default {
     consoleLogger,
     errorHandler
 }
-
-module.exports = middleware

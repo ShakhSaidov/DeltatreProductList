@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
+import { Model, model, Schema } from "mongoose"
+import { IProduct } from '../../utils/types'
 
-const productSchema = new mongoose.Schema({
+const productSchema: Schema = new Schema({
     name: {
         type: String,
         required: true
@@ -18,11 +19,12 @@ const productSchema = new mongoose.Schema({
 
 //Editting the way product data is presented
 productSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString()
+    transform: (_document: Document, returnedObject: IProduct) => {
+        returnedObject.id = returnedObject._id?.toString()
         delete returnedObject._id
         delete returnedObject.__v
     }
 })
 
-module.exports = mongoose.model('Product', productSchema)
+const Product: Model<IProduct> = model<IProduct>('Product', productSchema)
+export default Product

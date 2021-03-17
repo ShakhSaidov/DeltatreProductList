@@ -1,14 +1,12 @@
-const log = (...params) => {
+const log = (...params: string[]): void => {
     if(process.env.NODE_ENV !== 'test') console.log(...params)
 }
 
-const error = (...params) => {
+const error = (...params: string[]): void => {
     if(process.env.NODE_ENV !== 'test') console.error(...params)
 }
 
-const logger = {
+export default {
     log,
     error,
 }
-
-module.exports = logger
