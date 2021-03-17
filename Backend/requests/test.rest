@@ -8,7 +8,7 @@ HEAD http://localhost:3001/products
 GET http://localhost:3001/products
 
 ### Single product
-GET http://localhost:3001/products/6048e40c0c38054ed4c6aae4
+GET http://localhost:3001/products/604b05f9df68fe39b05d3b92
 
 ### Invalid product
 GET http://localhost:3001/products/6048daa298f9cc04f4e778f6

@@ -1,6 +1,6 @@
 import {Document, ObjectId} from 'mongoose'
 
-export interface IProduct extends Document{
+export interface MongooseProduct extends Document{
     _id?: ObjectId,
     id?: string,
     name: string,
@@ -8,7 +8,7 @@ export interface IProduct extends Document{
     quantity: number
 }
 
-export interface TestProduct{
+export interface IProduct{
     name: string,
     description: string,
     quantity: number

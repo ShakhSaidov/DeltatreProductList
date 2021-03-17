@@ -6,9 +6,9 @@ import supertest from 'supertest'
 import testHelper from './testHelper'
 import app from '../src/app'
 import Product from '../src/models/product'
-import { TestProduct } from '../utils/types'
+import { IProduct } from '../utils/types'
 
-let initialData: TestProduct[]
+let initialData: IProduct[]
 
 describe('Testing the API', () => {
     beforeEach(async () => {
@@ -119,7 +119,7 @@ describe('Testing the API', () => {
                     const newProduct = {
                         name: "new testing product",
                         description: "generic description",
-                        quantity: null
+                        quantity: undefined
                     }
 
                     await supertest(app)

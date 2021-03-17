@@ -1,8 +1,8 @@
 import Product from '../src/models/product'
-import { IProduct, TestProduct } from '../utils/types'
+import { MongooseProduct, IProduct } from '../utils/types'
 import { LeanDocument } from 'mongoose'
 
-const testData: TestProduct[] = [
+const testData: IProduct[] = [
     {
         name: 'Test Product 1',
         description: 'Generic description for first test product',
@@ -42,7 +42,7 @@ const generateNonExistingId = async (): Promise<string | undefined> => {
     return product._id?.toString()
 }
 
-const getProducts = async (): Promise<LeanDocument<IProduct>[]> => {
+const getProducts = async (): Promise<LeanDocument<MongooseProduct>[]> => {
     const products = await Product.find({})
     return products.map(product => product.toJSON())
 }

@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import Product from '../models/product'
 import { Router, Request, Response } from 'express'
 import { IProduct } from '../../utils/types'
+import validateObject from '../../utils/validator'
 
 const router: Router = Router()
 let etag: string | number | string[] | undefined
@@ -50,9 +51,9 @@ router.get('/:id', async (request, response) => {
 })
 
 //POST request to add a new product onto the product list
-router.post('/', async (request: Request, response: Response) => {
-    const object = request.body as IProduct
-    if (object.name === '' || object.description === '' || object.quantity < 0) {
+router.post('/', async (_request: Request, response: Response) => {
+    const object = _request.body as IProduct
+    if (!validateObject(object)) {
         response.status(422).send({ error: "missing product information" })
     } else {
         const check = await Product.exists({ name: object.name })
@@ -74,7 +75,7 @@ router.delete('/:id', async (request: Request, response: Response) => {
         response.sendStatus(204)
     }
 
-    else response.status(405).send({ error: "Can't perform deletion" })
+    else response.status(405).send({ error: "Can't perform deletion: invalid id" })
 })
 
 export default router

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import express from 'express'
 import cors from 'cors'
 require('express-async-errors')
