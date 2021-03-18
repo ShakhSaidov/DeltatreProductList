@@ -5,8 +5,8 @@ dotenv.config()
 import mongoose from 'mongoose'
 import Product from '../models/product'
 import { Router, Request, Response } from 'express'
-import { IProduct } from '../../utils/types'
-import validateObject from '../../utils/validator'
+import { IProduct } from '../utils/types'
+import validateObject from '../utils/validator'
 
 const router: Router = Router()
 let etag: string | number | string[] | undefined

@@ -1,9 +1,9 @@
-import app from './app'
+import app from './app/app'
 import * as http from 'http'
 const server = new http.Server(app)
 
-import logger from '../utils/logger'
-import variables from './config/variables'
+import logger from './app/utils/logger'
+import variables from './app/config/variables'
 
 const PORT = variables.PORT || 3001
 

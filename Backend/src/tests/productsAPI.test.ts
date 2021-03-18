@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import mongoose from 'mongoose'
 import supertest from 'supertest'
-import testHelper from '../utils/testHelper'
-import app from '../src/app'
-import Product from '../src/models/product'
-import { IProduct } from '../utils/types'
+import testHelper from '../app/utils/testHelper'
+import app from '../app/app'
+import Product from '../app/models/product'
+import { IProduct } from '../app/utils/types'
 
 let initialData: IProduct[]
 

@@ -1,4 +1,4 @@
-import Product from '../src/models/product'
+import Product from '../models/product'
 import { MongooseProduct, IProduct } from './types'
 import { LeanDocument } from 'mongoose'
 

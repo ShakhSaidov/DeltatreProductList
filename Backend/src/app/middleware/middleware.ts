@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import logger from '../../utils/logger'
+import logger from '../utils/logger'
 
 const consoleLogger = (request: Request, _response: Response, next: NextFunction): void => {
     logger.log('Request Method:', request.method)
