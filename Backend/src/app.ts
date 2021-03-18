@@ -2,9 +2,9 @@ import express from 'express'
 import cors from 'cors'
 require('express-async-errors')
 
-import connectDB from '../utils/database'
+import connectDB from './database/database'
 import productRouter from './routes/products'
-import middleware from '../utils/middleware'
+import middleware from './middleware/middleware'
 import testRouter from './routes/testing'
 
 const app = express()

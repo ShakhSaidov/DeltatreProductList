@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import mongoose from 'mongoose'
 import supertest from 'supertest'
-import testHelper from './testHelper'
+import testHelper from '../utils/testHelper'
 import app from '../src/app'
 import Product from '../src/models/product'
 import { IProduct } from '../utils/types'

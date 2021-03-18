@@ -1,5 +1,5 @@
 import Product from '../src/models/product'
-import { MongooseProduct, IProduct } from '../utils/types'
+import { MongooseProduct, IProduct } from './types'
 import { LeanDocument } from 'mongoose'
 
 const testData: IProduct[] = [

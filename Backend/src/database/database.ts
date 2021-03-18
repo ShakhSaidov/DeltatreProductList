@@ -1,5 +1,5 @@
 import { ConnectionOptions, connect} from 'mongoose'
-import variables from './variables'
+import variables from '../config/variables'
 
 const connectDB = async (): Promise<void> => {
     const mongoURI: string = variables.MONGODB!

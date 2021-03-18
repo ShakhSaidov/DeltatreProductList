@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router, Request, Response } from 'express'
 import Product from '../models/product'
-import testHelper from '../../tests/testHelper'
+import testHelper from '../../utils/testHelper'
 
 const router: Router = Router()
 
