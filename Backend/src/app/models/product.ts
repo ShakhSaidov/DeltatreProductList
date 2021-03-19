@@ -1,5 +1,5 @@
 import { Model, model, Schema } from "mongoose"
-import { MongooseProduct } from '../utils/types'
+import { MongooseProduct } from '../interfaces/product_interface'
 
 const productSchema: Schema = new Schema({
     name: {

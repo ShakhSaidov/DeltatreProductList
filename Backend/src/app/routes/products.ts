@@ -5,7 +5,7 @@ dotenv.config()
 import mongoose from 'mongoose'
 import Product from '../models/product'
 import { Router, Request, Response } from 'express'
-import { IProduct } from '../utils/types'
+import { IProduct } from '../interfaces/product_interface'
 import validateObject from '../utils/validator'
 
 const router: Router = Router()

@@ -6,6 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "start": "NODE_ENV=production node compiled/index.js",
+    "docker-start": "npm run tsc && npm start",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "test-start": "NODE_ENV=test node compiled/index.js",

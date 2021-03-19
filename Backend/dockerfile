@@ -1,0 +1,15 @@
+FROM node:8.7.0-alpine
+
+LABEL version="V1.0"
+LABEL author="Shakh Saidov"
+LABEL description="Backend for Deltatre product list application"
+
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
+RUN npm install
+COPY . .
+
+EXPOSE 3001
+
+CMD ["npm", "run", "docker-start"]

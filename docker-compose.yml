@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    env_file:
+        "./backend/.env"
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: "deltatre_backend"
+    expose:
+      - "3001"
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    image: "deltatre_frontend"
+    expose:
+    - "3000"
+    ports:
+      - "3000:3000"
+    links:
+      - "backend"

@@ -1,0 +1,15 @@
+FROM node:alpine
+
+LABEL version="V1.0"
+LABEL author="Shakh Saidov"
+LABEL description="Frontend for Deltatre product list application"
+
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm install
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "docker-start"]

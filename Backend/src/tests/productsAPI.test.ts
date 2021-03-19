@@ -6,7 +6,7 @@ import supertest from 'supertest'
 import testHelper from '../app/utils/testHelper'
 import app from '../app/app'
 import Product from '../app/models/product'
-import { IProduct } from '../app/utils/types'
+import { IProduct } from '../app/interfaces/product_interface'
 
 let initialData: IProduct[]
 
