@@ -12,6 +12,7 @@ const middleware_1 = __importDefault(require("./middleware/middleware"));
 const testing_1 = __importDefault(require("./routes/testing"));
 const app = express_1.default();
 void database_1.default();
+app.use(express_1.default.static('build'));
 app.use(cors_1.default());
 app.use(express_1.default.json());
 app.use(middleware_1.default.consoleLogger);

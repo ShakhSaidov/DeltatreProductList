@@ -11,8 +11,10 @@
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "test-start": "NODE_ENV=test node compiled/index.js",
     "lint": "eslint --ext .ts .",
-    "getBuild": "rm -rf build && cd ../Frontend/ && npm run build --prod && cp -r build ../Deployed/",
-    "deploy": "npm run tsc && npm run getBuild && git add . && git commit -m 'deployed' && git push heroku master"
+    "getBuild": "rm -rf build && cd ../frontend/ && npm run build --prod && cp -r build ../backend/",
+    "dockerBuild": "docker build --pull --rm -f 'dockerfile' -t backend:latest '.'",
+    "updateCompilation": "rm -rf compiled && npm run tsc",
+    "deploy": "npm run updateCompilation && npm run getBuild && npm run dockerBuild && git add . && git commit -m 'deployed' && git push heroku master"
   },
   "author": "Shakh",
   "license": "ISC",
